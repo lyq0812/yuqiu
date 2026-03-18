@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>园企汇 - 陕西厂房仓库出租网_西安_咸阳_宝鸡_厂房出租信息平台</title>
+    <meta name="description" content="园企汇专业提供陕西厂房出租信息，覆盖西安、咸阳、宝鸡、渭南、榆林、延安、汉中、安康、商洛等城市。标准厂房、仓库、车间出租，免费发布，一键联系业主。客服热线：13379308568">
+    <meta name="keywords" content="陕西厂房出租,西安仓库租赁,咸阳厂房,宝鸡厂房,渭南仓库,榆林厂房,延安厂房,园企汇,厂房出租平台">
+    <meta name="author" content="园企汇">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yuanqihui.com/">
+    <meta name="baidu-site-verification" content="codeva-mYgL2BsCrP" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <span style="color: white;"><i class="fas fa-map-marker-alt" style="color: white;"></i> 陕西厂房出租信息平台</span>
+                <span style="float: right; color: white;"><i class="fas fa-clock" style="color: white;"></i> 工作时间: 9:00-18:00</span>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h1>园企汇</h1>
+                            <span>陕西厂房仓库出租网</span>
+                        </div>
+                    </a>
+                    
+                    <nav class="nav-menu">
+                        <a href="index.html" class="active"><i class="fas fa-home"></i> 首页</a>
+                        <a href="listings.html"><i class="fas fa-building"></i> 房源信息</a>
+                        <a href="rent-wanted-list.html"><i class="fas fa-search"></i> 求租信息</a>
+                        <a href="publish.html"><i class="fas fa-plus-circle"></i> 发布房源</a>
+                        <a href="rent-wanted-publish.html"><i class="fas fa-handshake"></i> 发布求租</a>
+                        <a href="user.html" id="user-center-link"><i class="fas fa-user-circle"></i> <span id="user-name-display">用户中心</span></a>
+                        <a href="#" onclick="showLoginModal(); return false;" id="login-link"><i class="fas fa-sign-in-alt"></i> 登录/注册</a>
+                        <a href="#" onclick="logout(); return false;" style="color: #ef4444; display: none;" id="logout-link"><i class="fas fa-sign-out-alt"></i> 退出</a>
+                        <a href="admin.html" id="admin-link" style="display:none;"><i class="fas fa-cog"></i> 管理</a>
+                    </nav>
+                    
+                    <a href="tel:13379308568" class="hotline-btn">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>13379308568</span>
+                    </a>
+                    
+                    <button class="mobile-menu-btn" id="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+    <div class="mobile-nav" id="mobile-nav">
+        <div class="mobile-nav-header">
+            <h3><i class="fas fa-bars"></i> 导航菜单</h3>
+            <button class="mobile-nav-close" id="mobile-nav-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> 首页</a></li>
+            <li><a href="listings.html"><i class="fas fa-building"></i> 厂房房源</a></li>
+            <li><a href="publish.html"><i class="fas fa-plus-circle"></i> 发布厂房</a></li>
+            <li><a href="contact.html"><i class="fas fa-phone"></i> 联系我们</a></li>
+            <li><a href="admin.html"><i class="fas fa-cog"></i> 管理后台</a></li>
+            <li style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--gray-200);">
+                <a href="tel:13379308568" style="color: #ef4444; font-weight: 700;">
+                    <i class="fas fa-phone-alt"></i> 13379308568
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2><i class="fas fa-city"></i> 陕西厂房仓库出租信息平台</h2>
+                <p>覆盖西安、咸阳、宝鸡、渭南、榆林、延安、汉中、安康、商洛</p>
+                <p>真实房源 · 免费发布 · 快速匹配 · 业主直租</p>
+                
+                <div class="search-box">
+                    <form class="search-form" id="home-search-form">
+                        <select id="search-region">
+                            <option value="">选择地区</option>
+                            <option value="西安">西安</option>
+                            <option value="咸阳">咸阳</option>
+                            <option value="宝鸡">宝鸡</option>
+                            <option value="渭南">渭南</option>
+                            <option value="榆林">榆林</option>
+                            <option value="延安">延安</option>
+                            <option value="汉中">汉中</option>
+                            <option value="安康">安康</option>
+                            <option value="商洛">商洛</option>
+                        </select>
+                        <select id="search-area">
+                            <option value="">面积</option>
+                            <option value="0-500">500㎡以下</option>
+                            <option value="500-1000">500-1000㎡</option>
+                            <option value="1000-2000">1000-2000㎡</option>
+                            <option value="2000-99999">2000㎡以上</option>
+                        </select>
+                        <select id="search-type">
+                            <option value="">厂房类型</option>
+                            <option value="标准厂房">标准厂房</option>
+                            <option value="仓库">仓库</option>
+                            <option value="车间">车间</option>
+                            <option value="钢结构厂房">钢结构厂房</option>
+                            <option value="厂房+办公">厂房+办公</option>
+                        </select>
+                        <button type="submit">
+                            <i class="fas fa-search"></i> 搜索
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <h3>5000+</h3>
+                        <p>房源数量</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>9</h3>
+                        <p>覆盖城市</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>10000+</h3>
+                        <p>服务企业</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>98%</h3>
+                        <p>客户满意度</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Listings Section -->
+    <section class="listings-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-building"></i>
+                    <div>
+                        <h2>热门厂房推荐</h2>
+                        <p>精选陕西各地优质厂房仓库资源</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="region-tabs" style="justify-content: center; margin-bottom: 2rem;">
+                <button class="region-tab active" data-region="全部">全部</button>
+                <button class="region-tab" data-region="西安"><i class="fas fa-star"></i> 西安</button>
+                <button class="region-tab" data-region="咸阳">咸阳</button>
+                <button class="region-tab" data-region="宝鸡">宝鸡</button>
+                <button class="region-tab" data-region="渭南">渭南</button>
+                <button class="region-tab" data-region="榆林">榆林</button>
+                <button class="region-tab" data-region="延安">延安</button>
+                <button class="region-tab" data-region="汉中">汉中</button>
+                <button class="region-tab" data-region="安康">安康</button>
+                <button class="region-tab" data-region="商洛">商洛</button>
+            </div>
+            
+            <div class="listings-grid" id="home-listings">
+                <!-- Listings loaded by JS -->
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="listings.html" class="btn-call" style="display: inline-flex; padding: 0.875rem 2.5rem; font-size: 1rem; text-decoration: none;">
+                    <i class="fas fa-list"></i> 查看更多房源
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section style="background: white; padding: 5rem 0;">
+        <div class="container">
+            <div class="section-header" style="justify-content: center; text-align: center; flex-direction: column;">
+                <div class="section-title" style="justify-content: center;">
+                    <i class="fas fa-star"></i>
+                    <h2>为什么选择园企汇</h2>
+                </div>
+                <p style="color: var(--gray-500); margin-top: 0.5rem;">专业、诚信、高效的厂房出租服务平台</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 3rem;">
+                <div class="text-center" style="padding: 2rem; background: var(--gray-50); border-radius: var(--radius-2xl); transition: var(--transition);">
+                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;">
+                        <i class="fas fa-shield-alt" style="font-size: 1.75rem; color: white;"></i>
+                    </div>
+                    <h4 style="margin-bottom: 0.5rem;">真实房源</h4>
+                    <p style="color: var(--gray-500); font-size: 0.9375rem; margin: 0;">真实厂房信息，实地验真</p>
+                </div>
+                <div class="text-center" style="padding: 2rem; background: var(--gray-50); border-radius: var(--radius-2xl); transition: var(--transition);">
+                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #10b981, #34d399); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;">
+                        <i class="fas fa-clock" style="font-size: 1.75rem; color: white;"></i>
+                    </div>
+                    <h4 style="margin-bottom: 0.5rem;">快速响应</h4>
+                    <p style="color: var(--gray-500); font-size: 0.9375rem; margin: 0;">一对一服务，及时响应</p>
+                </div>
+                <div class="text-center" style="padding: 2rem; background: var(--gray-50); border-radius: var(--radius-2xl); transition: var(--transition);">
+                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #f59e0b, #fbbf24); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;">
+                        <i class="fas fa-money-bill-wave" style="font-size: 1.75rem; color: white;"></i>
+                    </div>
+                    <h4 style="margin-bottom: 0.5rem;">免费发布</h4>
+                    <p style="color: var(--gray-500); font-size: 0.9375rem; margin: 0;">业主直租，无中介费</p>
+                </div>
+                <div class="text-center" style="padding: 2rem; background: var(--gray-50); border-radius: var(--radius-2xl); transition: var(--transition);">
+                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #8b5cf6, #a78bfa); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;">
+                        <i class="fas fa-headset" style="font-size: 1.75rem; color: white;"></i>
+                    </div>
+                    <h4 style="margin-bottom: 0.5rem;">专业客服</h4>
+                    <p style="color: var(--gray-500); font-size: 0.9375rem; margin: 0;">7×24小时咨询服务</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
+        <div style="background:white;padding:30px;border-radius:10px;width:90%;max-width:400px;position:relative;">
+            <button onclick="closeAuthModal()" style="position:absolute;top:10px;right:15px;background:none;border:none;font-size:1.5rem;cursor:pointer;">×</button>
+            <div style="text-align:center;margin-bottom:1rem;">
+                <i class="fas fa-user-circle" style="font-size:3rem;color:#4F46E5;"></i>
+            </div>
+            <h3 style="text-align:center;">用户登录</h3>
+            <form id="login-form" style="margin-top:1.5rem;" onsubmit="return false;">
+                <div style="margin-bottom:1rem;">
+                    <label style="display:block;margin-bottom:0.5rem;font-weight:600;">用户名 / 手机号</label>
+                    <input type="text" id="login-username" style="width:100%;padding:0.75rem;border:2px solid #e5e7eb;border-radius:8px;box-sizing:border-box;" placeholder="请输入用户名或手机号">
+                </div>
+                <div style="margin-bottom:1rem;">
+                    <label style="display:block;margin-bottom:0.5rem;font-weight:600;">密码</label>
+                    <input type="password" id="login-password" style="width:100%;padding:0.75rem;border:2px solid #e5e7eb;border-radius:8px;box-sizing:border-box;" placeholder="请输入密码">
+                </div>
+                <button type="button" onclick="doLogin()" style="width:100%;padding:0.75rem;background:#4F46E5;color:white;border:none;border-radius:8px;cursor:pointer;font-size:1rem;">登录</button>
+            </form>
+            <form id="register-form" style="margin-top:1.5rem;display:none;" onsubmit="return false;">
+                <div style="margin-bottom:1rem;">
+                    <label style="display:block;margin-bottom:0.5rem;font-weight:600;">用户名</label>
+                    <input type="text" id="reg-username" style="width:100%;padding:0.75rem;border:2px solid #e5e7eb;border-radius:8px;box-sizing:border-box;" placeholder="请设置用户名（4-20个字符）">
+                </div>
+                <div style="margin-bottom:1rem;">
+                    <label style="display:block;margin-bottom:0.5rem;font-weight:600;">手机号码</label>
+                    <input type="tel" id="reg-phone" style="width:100%;padding:0.75rem;border:2px solid #e5e7eb;border-radius:8px;box-sizing:border-box;" placeholder="请输入11位手机号码">
+                </div>
+                <div style="margin-bottom:1rem;">
+                    <label style="display:block;margin-bottom:0.5rem;font-weight:600;">密码</label>
+                    <input type="password" id="reg-password" style="width:100%;padding:0.75rem;border:2px solid #e5e7eb;border-radius:8px;box-sizing:border-box;" placeholder="请设置登录密码（6-20个字符）">
+                </div>
+                <div style="margin-bottom:1rem;">
+                    <label style="display:block;margin-bottom:0.5rem;font-weight:600;">确认密码</label>
+                    <input type="password" id="reg-confirm-password" style="width:100%;padding:0.75rem;border:2px solid #e5e7eb;border-radius:8px;box-sizing:border-box;" placeholder="请再次输入密码">
+                </div>
+                <button type="button" onclick="doRegister()" style="width:100%;padding:0.75rem;background:#4F46E5;color:white;border:none;border-radius:8px;cursor:pointer;font-size:1rem;">注册</button>
+            </form>
+            <p style="text-align:center;margin-top:1rem;">
+                <a href="#" onclick="showRegister();return false;" style="color:#4F46E5;">立即注册</a> &nbsp;|&nbsp; <a href="#" onclick="showLogin();return false;" style="color:#6b7280;">返回登录</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3><i class="fas fa-industry"></i> 园企汇</h3>
+                    <p>陕西厂房仓库出租信息平台，覆盖全省九大城市。真实房源，免费发布，助力企业快速找到合适厂房。</p>
+                    <a href="tel:13379308568" class="hotline">
+                        <i class="fas fa-phone-alt"></i> 13379308568
+                    </a>
+                </div>
+                <div class="footer-column">
+                    <h4>快速导航</h4>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-angle-right"></i> 网站首页</a></li>
+                        <li><a href="listings.html"><i class="fas fa-angle-right"></i> 房源列表</a></li>
+                        <li><a href="publish.html"><i class="fas fa-angle-right"></i> 免费发布</a></li>
+                        <li><a href="contact.html"><i class="fas fa-angle-right"></i> 联系我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>热门城市</h4>
+                    <ul>
+                        <li><a href="listings.html?region=西安"><i class="fas fa-angle-right"></i> 西安厂房出租</a></li>
+                        <li><a href="listings.html?region=咸阳"><i class="fas fa-angle-right"></i> 咸阳厂房出租</a></li>
+                        <li><a href="listings.html?region=宝鸡"><i class="fas fa-angle-right"></i> 宝鸡厂房出租</a></li>
+                        <li><a href="listings.html?region=榆林"><i class="fas fa-angle-right"></i> 榆林厂房出租</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>关注我们</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> 关于我们</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> 服务条款</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> 隐私政策</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> 网站地图</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 园企汇 · 陕西厂房出租平台 · 客服热线：<a href="tel:13379308568">13379308568</a></p>
+                <p>陕ICP备XXXXXXXX号 · Powered by 园企汇</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Contact -->
+    <div class="floating-contact">
+        <a href="tel:13379308568">
+            <i class="fas fa-phone-alt"></i>
+            立即咨询
+        </a>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span id="toast-icon"><i class="fas fa-check-circle"></i></span>
+        <span id="toast-message">操作成功</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/main.js"></script>
+    <style>
+        .btn-login, .btn-register, .btn-user {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-login {
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            margin-right: 0.5rem;
+        }
+        .btn-login:hover {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-register {
+            background: var(--primary);
+            color: white;
+            border: 2px solid var(--primary);
+        }
+        .btn-register:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+            color: white;
+        }
+        .btn-user {
+            background: var(--primary-50);
+            color: var(--primary);
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+        .btn-user:hover {
+            background: var(--primary);
+            color: white;
+        }
+    </style>
+    <script>
+        // 检查用户登录状态
+        function checkUserStatus() {
+            const session = localStorage.getItem('yqh_user');
+            const adminLink = document.getElementById('admin-link');
+            const userNameDisplay = document.getElementById('user-name-display');
+            const logoutLink = document.getElementById('logout-link');
+            const loginLink = document.getElementById('login-link');
+            const userCenterLink = document.getElementById('user-center-link');
+            
+            if (session) {
+                const user = JSON.parse(session);
+                userNameDisplay.textContent = user.username || user.phone;
+                
+                if (logoutLink) logoutLink.style.display = 'inline-flex';
+                if (loginLink) loginLink.style.display = 'none';
+                if (userCenterLink) userCenterLink.style.display = 'inline-flex';
+                
+                if (user.role === 'admin') {
+                    adminLink.style.display = 'inline-flex';
+                }
+            } else {
+                userNameDisplay.textContent = '用户中心';
+                if (logoutLink) logoutLink.style.display = 'none';
+                if (loginLink) loginLink.style.display = 'inline-flex';
+                if (userCenterLink) userCenterLink.style.display = 'inline-flex';
+                if (adminLink) adminLink.style.display = 'none';
+            }
+        }
+        
+        // 渲染首页房源
+        function renderHomeListings() {
+            const listings = getApprovedListings().slice(0, 6);
+            renderListingsGrid(listings, 'home-listings');
+        }
+        
+        // 地区筛选
+        document.querySelectorAll('.region-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.region-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                const region = this.dataset.region;
+                let listings = getApprovedListings();
+                
+                if (region !== '全部') {
+                    listings = listings.filter(item => item.region === region);
+                }
+                
+                renderListingsGrid(listings.slice(0, 6), 'home-listings');
+            });
+        });
+        
+        // 搜索表单
+        document.getElementById('home-search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const region = document.getElementById('search-region').value;
+            const area = document.getElementById('search-area').value;
+            const type = document.getElementById('search-type').value;
+            
+            let url = 'listings.html?';
+            if (region) url += `region=${region}&`;
+            if (area) url += `area=${area}&`;
+            if (type) url += `type=${type}&`;
+            
+            window.location.href = url;
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // 初始化
+        initAuth();
+        initSampleData();
+        renderHomeListings();
+        checkUserStatus();
+        
+    </script>
+</body>
+</html>

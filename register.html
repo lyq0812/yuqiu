@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册 - 园企汇陕西厂房出租网</title>
+    <meta name="description" content="注册园企汇账号，发布厂房出租或求租信息">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .auth-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #0f172a 100%); padding: 2rem; position: relative; }
+        .auth-page::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); pointer-events: none; }
+        .auth-card { background: white; border-radius: 24px; padding: 3rem; width: 100%; max-width: 440px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); position: relative; z-index: 1; }
+        .auth-logo { text-align: center; margin-bottom: 2rem; }
+        .auth-logo a { display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .auth-logo .logo-icon { width: 56px; height: 56px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; }
+        .auth-logo h1 { font-size: 1.75rem; color: #1e293b; margin: 0; }
+        .auth-logo span { font-size: 0.8125rem; color: #64748b; }
+        .auth-title { text-align: center; margin-bottom: 2rem; }
+        .auth-title h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .auth-title p { color: #64748b; margin: 0; }
+        .auth-form .form-group { margin-bottom: 1.25rem; }
+        .auth-form label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #334155; font-size: 0.9375rem; }
+        .auth-form label .required { color: #ef4444; }
+        .auth-form input { width: 100%; padding: 0.875rem 1rem; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1rem; outline: none; transition: all 0.3s; background: #f8fafc; }
+        .auth-form input:focus { border-color: #1e40af; background: white; box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1); }
+        .form-hint { font-size: 0.8125rem; color: #64748b; margin-top: 0.375rem; }
+        .btn-auth { width: 100%; background: linear-gradient(135deg, #1e40af, #1e3a8a); color: white; border: none; padding: 1rem; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 0.5rem; }
+        .btn-auth:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(30, 64, 175, 0.3); }
+        .btn-auth:disabled { opacity: 0.7; cursor: not-allowed; }
+        .auth-links { text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; }
+        .auth-links a { color: #1e40af; font-weight: 500; }
+        .auth-back { text-align: center; margin-top: 1rem; }
+        .auth-back a { color: #64748b; font-size: 0.9375rem; }
+        .error-msg { background: #fee2e2; color: #dc2626; padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.875rem; display: none; }
+        .error-msg.show { display: block; }
+        .success-msg { background: #d1fae5; color: #065f46; padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.875rem; display: none; }
+        .success-msg.show { display: block; }
+        .checkbox-item { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+        .checkbox-item input { width: 18px; height: 18px; accent-color: #1e40af; }
+        .checkbox-item label { margin: 0; font-weight: 400; font-size: 0.9375rem; color: #475569; }
+    </style>
+</head>
+<body>
+    <div class="auth-page">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <a href="index.html">
+                    <div class="logo-icon"><i class="fas fa-industry"></i></div>
+                    <div><h1>园企汇</h1><span>陕西厂房仓库出租网</span></div>
+                </a>
+            </div>
+            
+            <div class="auth-title">
+                <h2>创建账号</h2>
+                <p>注册成为园企汇会员，发布房源或求租信息</p>
+            </div>
+
+            <div class="success-msg" id="success-msg"><i class="fas fa-check-circle"></i> <span id="success-text"></span></div>
+            <div class="error-msg" id="error-msg"><i class="fas fa-exclamation-circle"></i> <span id="error-text"></span></div>
+
+            <form class="auth-form" id="register-form">
+                <div class="form-group">
+                    <label>用户名 <span class="required">*</span></label>
+                    <input type="text" id="reg-username" placeholder="请设置用户名（4-20个字符）" required minlength="4" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label>手机号码 <span class="required">*</span></label>
+                    <input type="tel" id="reg-phone" placeholder="请输入11位手机号码" required pattern="1[3-9]\d{9}">
+                    <p class="form-hint">用于接收业主联系，请确保号码真实有效</p>
+                </div>
+                <div class="form-group">
+                    <label>设置密码 <span class="required">*</span></label>
+                    <input type="password" id="reg-password" placeholder="请设置登录密码（6-20个字符）" required minlength="6" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label>确认密码 <span class="required">*</span></label>
+                    <input type="password" id="reg-confirm-password" placeholder="请再次输入密码" required>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="agree-terms" required>
+                    <label for="agree-terms">我已阅读并同意 <a href="#">《服务条款》</a> 和 <a href="#">《隐私政策》</a></label>
+                </div>
+                <button type="button" class="btn-auth" id="submit-btn" onclick="try { doRegister() } catch(e) { alert(e.message) }"><i class="fas fa-user-plus"></i> 立即注册</button>
+            </form>
+
+            <div class="auth-links">已有账号？ <a href="login.html">立即登录</a></div>
+            <div class="auth-back"><a href="index.html"><i class="fas fa-arrow-left"></i> 返回首页</a></div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
+        <span id="toast-icon"><i class="fas fa-check-circle"></i></span>
+        <span id="toast-message">操作成功</span>
+    </div>
+
+    <script>
+        // 简单的本地存储版本，不需要 Supabase
+        function showToast(message, type = 'success') {
+            alert(message);
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = message;
+            toast.className = `toast show ${type}`;
+            document.getElementById('toast-icon').innerHTML = type === 'success' ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle"></i>';
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function showError(msg) {
+            alert('错误: ' + msg);
+            const d = document.getElementById('error-msg');
+            document.getElementById('error-text').textContent = msg;
+            d.classList.add('show');
+            setTimeout(() => d.classList.remove('show'), 5000);
+        }
+
+        function isValidPhone(phone) { return /^1[3-9]\d{9}$/.test(phone); }
+
+        // 注册
+        function doRegister() {
+            
+            const username = document.getElementById('reg-username').value.trim();
+            const phone = document.getElementById('reg-phone').value.trim();
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('reg-confirm-password').value;
+
+            if (!username || username.length < 4) { showError('用户名至少需要4个字符'); return; }
+            if (!isValidPhone(phone)) { showError('请输入正确的手机号码'); return; }
+            if (!password || password.length < 6) { showError('密码至少需要6个字符'); return; }
+            if (password !== confirmPassword) { showError('两次输入的密码不一致'); return; }
+
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 注册中...';
+
+            try {
+                // 使用本地存储检查用户是否已存在
+                let users = JSON.parse(localStorage.getItem('yqh_users') || '[]');
+                
+                // 检查用户名和手机号是否已存在
+                const existingUser = users.find(u => u.username === username || u.phone === phone);
+                if (existingUser) {
+                    showError('用户名或手机号已被注册');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-user-plus"></i> 立即注册';
+                    return;
+                }
+
+                // 创建新用户
+                const newUser = { 
+                    id: Date.now(),
+                    username: username, 
+                    phone: phone, 
+                    password: password,
+                    role: 'user',
+                    created_at: new Date().toISOString()
+                };
+                
+                // 保存到本地存储
+                users.push(newUser);
+                localStorage.setItem('yqh_users', JSON.stringify(users));
+
+                // 自动登录
+                localStorage.setItem('yqh_user', JSON.stringify(newUser));
+                showToast('注册成功！正在跳转...');
+                setTimeout(() => window.location.href = 'index.html', 1500);
+
+            } catch (err) {
+                console.error('注册错误:', err);
+                alert('注册失败: ' + err.message);
+                showError('注册失败，请稍后重试');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-user-plus"></i> 立即注册';
+            }
+        }
+    </script>
+</body>
+</html>

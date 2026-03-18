@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>厂房房源列表 - 园企汇陕西厂房出租网</title>
+    <meta name="description" content="陕西厂房仓库出租信息列表，覆盖西安、咸阳、宝鸡、渭南、榆林、延安、汉中、安康、商洛。筛选找房，快速联系业主。">
+    <meta name="keywords" content="陕西厂房列表,西安厂房,咸阳仓库,厂房出租信息">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <span><i class="fas fa-map-marker-alt"></i> 陕西厂房出租信息平台</span>
+                <span style="float: right;"><i class="fas fa-clock"></i> 工作时间: 9:00-18:00</span>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon"><i class="fas fa-industry"></i></div>
+                        <div class="logo-text"><h1>园企汇</h1><span>陕西厂房仓库出租网</span></div>
+                    </a>
+                    
+                    <nav class="nav-menu">
+                        <a href="index.html"><i class="fas fa-home"></i> 首页</a>
+                        <a href="listings.html" class="active"><i class="fas fa-building"></i> 房源信息</a>
+                        <a href="rent-wanted-list.html"><i class="fas fa-search"></i> 求租信息</a>
+                        <a href="publish.html"><i class="fas fa-plus-circle"></i> 发布房源</a>
+                        <a href="rent-wanted-publish.html"><i class="fas fa-handshake"></i> 发布求租</a>
+                        <a href="user.html" id="user-center-link"><i class="fas fa-user-circle"></i> <span id="user-name-display">用户中心</span></a>
+                        <a href="#" onclick="showLoginModal(); return false;" id="login-link"><i class="fas fa-sign-in-alt"></i> 登录/注册</a>
+                        <a href="#" onclick="logout(); return false;" style="color: #ef4444; display: none;" id="logout-link"><i class="fas fa-sign-out-alt"></i> 退出</a>
+                        <a href="admin.html" id="admin-link" style="display:none;"><i class="fas fa-cog"></i> 管理</a>
+                    </nav>
+                    
+                    <a href="tel:13379308568" class="hotline-btn">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>13379308568</span>
+                    </a>
+                    
+                    <button class="mobile-menu-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+    <div class="mobile-nav" id="mobile-nav">
+        <div class="mobile-nav-header">
+            <h3><i class="fas fa-bars"></i> 导航菜单</h3>
+            <button class="mobile-nav-close" id="mobile-nav-close"><i class="fas fa-times"></i></button>
+        </div>
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> 首页</a></li>
+            <li><a href="listings.html"><i class="fas fa-building"></i> 房源信息</a></li>
+            <li><a href="rent-wanted-list.html"><i class="fas fa-search"></i> 求租信息</a></li>
+            <li><a href="publish.html"><i class="fas fa-plus-circle"></i> 发布房源</a></li>
+            <li><a href="rent-wanted-publish.html"><i class="fas fa-handshake"></i> 发布求租</a></li>
+            <li><a href="contact.html"><i class="fas fa-phone"></i> 关于我们</a></li>
+            <li style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--gray-200);">
+                <a href="tel:13379308568" style="color: #ef4444; font-weight: 700;">
+                    <i class="fas fa-phone-alt"></i> 13379308568
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="index.html">首页</a> <span>/</span> 厂房房源列表
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <label>地区：</label>
+                    <select id="filter-region">
+                        <option value="全部">全部</option>
+                        <option value="西安">西安</option>
+                        <option value="咸阳">咸阳</option>
+                        <option value="宝鸡">宝鸡</option>
+                        <option value="渭南">渭南</option>
+                        <option value="榆林">榆林</option>
+                        <option value="延安">延安</option>
+                        <option value="汉中">汉中</option>
+                        <option value="安康">安康</option>
+                        <option value="商洛">商洛</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>面积：</label>
+                    <select id="filter-area">
+                        <option value="">不限</option>
+                        <option value="0-500">500㎡以下</option>
+                        <option value="500-1000">500-1000㎡</option>
+                        <option value="1000-2000">1000-2000㎡</option>
+                        <option value="2000-99999">2000㎡以上</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>类型：</label>
+                    <select id="filter-type">
+                        <option value="全部">全部</option>
+                        <option value="标准厂房">标准厂房</option>
+                        <option value="仓库">仓库</option>
+                        <option value="车间">车间</option>
+                        <option value="钢结构厂房">钢结构厂房</option>
+                        <option value="厂房+办公">厂房+办公</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" id="filter-eia" style="width: 18px; height: 18px; accent-color: var(--primary);"> 可办环评
+                    </label>
+                </div>
+                
+                <button class="btn-call" style="padding: 0.625rem 1.5rem;" onclick="applyFilters()">
+                    <i class="fas fa-search"></i> 筛选
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Listings Section -->
+    <section class="listings-section">
+        <div class="container">
+            <div id="debug-info" style="display:none;"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                <span id="result-count" style="color: var(--gray-600); font-size: 1rem;">共找到 <strong style="color: var(--primary);">0</strong> 条房源</span>
+                <select id="sort-order" style="padding: 0.625rem 1.25rem; border: 2px solid var(--gray-200); border-radius: var(--radius-lg); font-size: 0.9375rem; outline: none; cursor: pointer;">
+                    <option value="newest">最新发布</option>
+                    <option value="price-asc">价格从低到高</option>
+                    <option value="price-desc">价格从高到低</option>
+                    <option value="area-asc">面积从小到大</option>
+                </select>
+            </div>
+            
+            <div class="listings-grid" id="listings-container">
+                <!-- Listings loaded by JS -->
+            </div>
+            
+            <div class="pagination" id="pagination">
+                <!-- Pagination loaded by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3><i class="fas fa-industry"></i> 园企汇</h3>
+                    <p>陕西厂房仓库出租信息平台，覆盖全省九大城市。</p>
+                    <a href="tel:13379308568" class="hotline"><i class="fas fa-phone-alt"></i> 13379308568</a>
+                </div>
+                <div class="footer-column">
+                    <h4>快速导航</h4>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-angle-right"></i> 网站首页</a></li>
+                        <li><a href="listings.html"><i class="fas fa-angle-right"></i> 房源列表</a></li>
+                        <li><a href="publish.html"><i class="fas fa-angle-right"></i> 免费发布</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>热门城市</h4>
+                    <ul>
+                        <li><a href="listings.html?region=西安"><i class="fas fa-angle-right"></i> 西安厂房</a></li>
+                        <li><a href="listings.html?region=咸阳"><i class="fas fa-angle-right"></i> 咸阳厂房</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>联系我们</h4>
+                    <ul>
+                        <li><a href="tel:13379308568"><i class="fas fa-phone-alt"></i> 13379308568</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 园企汇 · 陕西厂房出租平台 · 客服热线：<a href="tel:13379308568">13379308568</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Contact -->
+    <div class="floating-contact">
+        <a href="tel:13379308568"><i class="fas fa-phone-alt"></i> 立即咨询</a>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span id="toast-icon"><i class="fas fa-check-circle"></i></span>
+        <span id="toast-message">操作成功</span>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal" style="max-width:400px;">
+            <div style="text-align:center;margin-bottom:1rem;">
+                <i class="fas fa-user-circle" style="font-size:3rem;color:var(--primary);"></i>
+            </div>
+            <h3 style="text-align:center;">用户登录</h3>
+            <form id="login-form" style="margin-top:1.5rem;" onsubmit="return false;">
+                <div class="form-group">
+                    <label>用户名 / 手机号</label>
+                    <input type="text" id="login-username" placeholder="请输入用户名或手机号">
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <input type="password" id="login-password" placeholder="请输入密码">
+                </div>
+                <button type="button" class="btn-submit" style="width:100%;margin-top:1rem;" onclick="doLogin()">登录</button>
+            </form>
+            <form id="register-form" style="margin-top:1.5rem;display:none;" onsubmit="return false;">
+                <div class="form-group">
+                    <label>用户名</label>
+                    <input type="text" id="reg-username" placeholder="请设置用户名（4-20个字符）">
+                </div>
+                <div class="form-group">
+                    <label>手机号码</label>
+                    <input type="tel" id="reg-phone" placeholder="请输入11位手机号码">
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <input type="password" id="reg-password" placeholder="请设置登录密码（6-20个字符）">
+                </div>
+                <div class="form-group">
+                    <label>确认密码</label>
+                    <input type="password" id="reg-confirm-password" placeholder="请再次输入密码">
+                </div>
+                <button type="button" class="btn-submit" style="width:100%;margin-top:1rem;" onclick="doRegister()">注册</button>
+            </form>
+            <p style="text-align:center;margin-top:1rem;">
+                <a href="#" onclick="showRegister();return false;" style="color:var(--primary);">立即注册</a> &nbsp;|&nbsp; <a href="#" onclick="showLogin();return false;" style="color:var(--gray-500);">返回登录</a>
+            </p>
+            <button onclick="closeAuthModal()" style="position:absolute;top:15px;right:15px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--gray-400);">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+
+    <script src="js/auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // 本地存储key (使用不同名称避免重复)
+        var LOCAL_STORAGE_KEYS = { LISTINGS: 'yqh_listings', FAVORITES: 'yqh_favorites' };
+        
+        // 工具函数
+        function localFormatPrice(price) {
+            return price ? price.toLocaleString('zh-CN') : '0';
+        }
+        
+        function localGetFavorites() {
+            const data = localStorage.getItem(LOCAL_STORAGE_KEYS.FAVORITES);
+            return data ? JSON.parse(data) : [];
+        }
+        
+        function localIsFavorite(id) {
+            return localGetFavorites().includes(id);
+        }
+        
+        function localGetListings() {
+            const data = localStorage.getItem(LOCAL_STORAGE_KEYS.LISTINGS);
+            return data ? JSON.parse(data) : [];
+        }
+        
+        // 本地筛选函数
+        function localFilterListings(listings, filters) {
+            return listings.filter(item => {
+                if (filters.region && filters.region !== '全部' && item.region !== filters.region) return false;
+                if (filters.areaMin && item.area < parseInt(filters.areaMin)) return false;
+                if (filters.areaMax && item.area > parseInt(filters.areaMax)) return false;
+                if (filters.type && filters.type !== '全部' && item.type !== filters.type) return false;
+                if (filters.eia === 'true' && !item.eiaAvailable) return false;
+                return true;
+            });
+        }
+        
+        // 渲染卡片
+        function localRenderListingCard(listing) {
+            var isFav = localIsFavorite(listing.id);
+            var tags = listing.tags || [];
+            var img = listing.images && listing.images.length > 0 ? listing.images[0] : 'https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=800';
+            
+            return '<article class="listing-card fade-in">' +
+                '<div class="listing-image">' +
+                    '<a href="detail.html?id=' + listing.id + '">' +
+                        '<img src="' + img + '" alt="' + listing.title + '" loading="lazy">' +
+                    '</a>' +
+                    '<div class="listing-tags">' +
+                        (tags.includes('急租') ? '<span class="listing-tag urgent">急租</span>' : '') +
+                        (tags.includes('可分租') ? '<span class="listing-tag divisible">可分租</span>' : '') +
+                        (tags.includes('丙二类消防') ? '<span class="listing-tag fire-safety">丙二类</span>' : '') +
+                        (tags.includes('可办环评') ? '<span class="listing-tag eia">可办环评</span>' : '') +
+                    '</div>' +
+                    '<span class="listing-region">' + listing.region + '</span>' +
+                '</div>' +
+                '<div class="listing-content">' +
+                    '<h3><a href="detail.html?id=' + listing.id + '">' + listing.title + '</a></h3>' +
+                    '<div class="listing-meta">' +
+                        '<span><i class="fas fa-vector-square"></i> ' + listing.area + '㎡</span>' +
+                        '<span><i class="fas fa-ruler-vertical"></i> ' + listing.height + '米</span>' +
+                        '<span><i class="fas fa-building"></i> ' + listing.type + '</span>' +
+                    '</div>' +
+                    '<div class="listing-footer">' +
+                        '<div class="listing-price">¥' + localFormatPrice(listing.price) + '<span>/月</span></div>' +
+                        '<div class="listing-actions">' +
+                            '<a href="tel:' + listing.contact + '" class="btn-call"><i class="fas fa-phone-alt"></i> 联系</a>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+            '</article>';
+        }
+        
+        // 渲染列表
+        function localRenderListingsGrid(listings, containerId) {
+            var container = document.getElementById(containerId);
+            if (!container) return;
+            
+            if (listings.length === 0) {
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-search"></i><h4>暂无符合条件的房源</h4><p>请尝试调整筛选条件或发布您的房源</p></div>';
+                return;
+            }
+            
+            container.innerHTML = listings.map(function(listing) { return localRenderListingCard(listing); }).join('');
+        }
+        
+        let currentPage = 1;
+        const itemsPerPage = 9;
+        let filteredListings = [];
+        
+        // 获取URL参数并设置筛选
+        function initFiltersFromUrl() {
+            const region = getUrlParam('region');
+            const area = getUrlParam('area');
+            const type = getUrlParam('type');
+            const eia = getUrlParam('eia');
+            
+            if (region) document.getElementById('filter-region').value = region;
+            if (area) document.getElementById('filter-area').value = area;
+            if (type) document.getElementById('filter-type').value = type;
+            if (eia === 'true') document.getElementById('filter-eia').checked = true;
+        }
+        
+        // 应用筛选
+        async function applyFilters() {
+            document.getElementById('debug-info').innerHTML = 'applyFilters 被调用，正在从云端获取数据...';
+            
+            // 从云端获取数据
+            const allListings = await getApprovedListings();
+            document.getElementById('debug-info').innerHTML = 'applyFilters 房源数量: ' + allListings.length + ' - 准备排序';
+            
+            const region = document.getElementById('filter-region').value;
+            const area = document.getElementById('filter-area').value;
+            const type = document.getElementById('filter-type').value;
+            const eia = document.getElementById('filter-eia').checked;
+            const sort = document.getElementById('sort-order').value;
+            
+            let filters = { region: region, type: type, eia: eia ? 'true' : '' };
+            
+            if (area) {
+                const [min, max] = area.split('-');
+                filters.areaMin = min;
+                filters.areaMax = max;
+            }
+            
+            filteredListings = localFilterListings(allListings, filters);
+            
+            document.getElementById('debug-info').innerHTML = 'applyFilters 筛选后: ' + filteredListings.length + ' - 准备排序';
+            
+            // 排序
+            if (sort === 'price-asc') filteredListings.sort((a, b) => a.price - b.price);
+            else if (sort === 'price-desc') filteredListings.sort((a, b) => b.price - a.price);
+            else if (sort === 'area-asc') filteredListings.sort((a, b) => a.area - b.area);
+            else filteredListings.sort((a, b) => (b.created_at || b.timestamp) - (a.created_at || a.timestamp));
+            
+            document.getElementById('debug-info').innerHTML = 'applyFilters 排序后: ' + filteredListings.length + ' - 准备渲染';
+            
+            currentPage = 1;
+            renderPage();
+        }
+        
+        // 渲染分页
+        function renderPage() {
+            try {
+                document.getElementById('debug-info').innerHTML = 'renderPage 数据: ' + filteredListings.length;
+                
+                const totalPages = Math.ceil(filteredListings.length / itemsPerPage);
+                const start = (currentPage - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const pageItems = filteredListings.slice(start, end);
+                
+                document.getElementById('result-count').innerHTML = `共找到 <strong style="color: var(--primary);">${filteredListings.length}</strong> 条房源`;
+                localRenderListingsGrid(pageItems, 'listings-container');
+                
+                let paginationHtml = '';
+                if (totalPages > 1) {
+                    paginationHtml += `<button ${currentPage === 1 ? 'disabled' : ''} onclick="goToPage(${currentPage - 1})"><i class="fas fa-chevron-left"></i></button>`;
+                    for (let i = 1; i <= totalPages; i++) {
+                        if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                            paginationHtml += `<button class="${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+                        } else if (i === currentPage - 2 || i === currentPage + 2) {
+                            paginationHtml += `<button disabled>...</button>`;
+                        }
+                    }
+                    paginationHtml += `<button ${currentPage === totalPages ? 'disabled' : ''} onclick="goToPage(${currentPage + 1})"><i class="fas fa-chevron-right"></i></button>`;
+                }
+                document.getElementById('pagination').innerHTML = paginationHtml;
+            } catch(e) {
+                document.getElementById('debug-info').innerHTML = 'renderPage错误: ' + e.message;
+            }
+        }
+        
+        function goToPage(page) {
+            currentPage = page;
+            renderPage();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // 用户状态检查
+        function checkUserStatus() {
+            const session = localStorage.getItem('yqh_user');
+            const adminLink = document.getElementById('admin-link');
+            const userNameDisplay = document.getElementById('user-name-display');
+            const logoutLink = document.getElementById('logout-link');
+            const loginLink = document.getElementById('login-link');
+            const userCenterLink = document.getElementById('user-center-link');
+            
+            if (session) {
+                const user = JSON.parse(session);
+                userNameDisplay.textContent = user.username || user.phone;
+                
+                if (logoutLink) logoutLink.style.display = 'inline-flex';
+                if (loginLink) loginLink.style.display = 'none';
+                if (userCenterLink) userCenterLink.style.display = 'inline-flex';
+                
+                if (user.role === 'admin') {
+                    adminLink.style.display = 'inline-flex';
+                }
+            } else {
+                userNameDisplay.textContent = '用户中心';
+                if (logoutLink) logoutLink.style.display = 'none';
+                if (loginLink) loginLink.style.display = 'inline-flex';
+                if (userCenterLink) userCenterLink.style.display = 'inline-flex';
+                if (adminLink) adminLink.style.display = 'none';
+            }
+        }
+        
+        // 页面初始化
+        function initListingPage() {
+            // 直接使用本地函数初始化
+            initFiltersFromUrl();
+            initAuth();
+            document.getElementById('sort-order').addEventListener('change', applyFilters);
+            
+            // 页面加载时自动刷新数据
+            applyFilters();
+            
+            checkUserStatus();
+            
+            // 每30秒自动刷新一次
+            setInterval(function() {
+                applyFilters();
+            }, 30000);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initListingPage();
+        });
+    </script>

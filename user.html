@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心 - 园企汇陕西厂房出租网</title>
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .user-page {
+            padding: 2rem 0;
+            min-height: calc(100vh - 200px);
+        }
+        .user-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+        .user-sidebar {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            height: fit-content;
+        }
+        .user-avatar {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 1.5rem;
+        }
+        .user-avatar i {
+            font-size: 4rem;
+            color: var(--primary);
+        }
+        .user-avatar h3 {
+            margin-top: 0.5rem;
+            font-size: 1.25rem;
+        }
+        .user-avatar p {
+            color: var(--gray-500);
+            font-size: 0.875rem;
+            margin: 0;
+        }
+        .user-menu {
+            list-style: none;
+        }
+        .user-menu li {
+            margin-bottom: 0.5rem;
+        }
+        .user-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            color: var(--gray-700);
+            transition: all 0.3s;
+        }
+        .user-menu a:hover, .user-menu a.active {
+            background: var(--primary-50);
+            color: var(--primary);
+        }
+        .user-content {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+        .user-section {
+            display: none;
+        }
+        .user-section.active {
+            display: block;
+        }
+        .my-listings-card {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .my-listings-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        .my-listings-info p {
+            font-size: 0.8125rem;
+            color: var(--gray-500);
+            margin: 0;
+        }
+        .my-listings-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .status-badge {
+            padding: 0.25rem 0.625rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .status-approved {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status-rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .login-required {
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+        .login-required i {
+            font-size: 5rem;
+            color: var(--gray-200);
+            margin-bottom: 2rem;
+        }
+        .login-required h2 {
+            margin-bottom: 1rem;
+        }
+        .login-required p {
+            color: var(--gray-500);
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 768px) {
+            .user-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <span><i class="fas fa-map-marker-alt"></i> 陕西厂房出租信息平台</span>
+                <span style="float: right;"><i class="fas fa-clock"></i> 工作时间: 9:00-18:00</span>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h1>园企汇</h1>
+                            <span>陕西厂房仓库出租网</span>
+                        </div>
+                    </a>
+                    
+                    <nav class="nav-menu">
+                        <a href="index.html"><i class="fas fa-home"></i> 首页</a>
+                        <a href="listings.html"><i class="fas fa-building"></i> 房源信息</a>
+                        <a href="rent-wanted-list.html"><i class="fas fa-search"></i> 求租信息</a>
+                        <a href="publish.html"><i class="fas fa-plus-circle"></i> 发布房源</a>
+                        <a href="rent-wanted-publish.html"><i class="fas fa-handshake"></i> 发布求租</a>
+                        <a href="user.html" id="user-center-link"><i class="fas fa-user-circle"></i> <span id="user-name-display">用户中心</span></a>
+                        <a href="#" onclick="showLoginModal(); return false;" id="login-link"><i class="fas fa-sign-in-alt"></i> 登录/注册</a>
+                        <a href="#" onclick="logout(); return false;" style="color: #ef4444; display: none;" id="logout-link"><i class="fas fa-sign-out-alt"></i> 退出</a>
+                        <a href="admin.html" id="admin-link" style="display:none;"><i class="fas fa-cog"></i> 管理</a>
+                    </nav>
+                    
+                    <a href="tel:13379308568" class="hotline-btn">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>13379308568</span>
+                    </a>
+                    
+                    <button class="mobile-menu-btn" id="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+    <div class="mobile-nav" id="mobile-nav">
+        <div class="mobile-nav-header">
+            <h3><i class="fas fa-bars"></i> 导航菜单</h3>
+            <button class="mobile-nav-close" id="mobile-nav-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> 首页</a></li>
+            <li><a href="listings.html"><i class="fas fa-building"></i> 房源信息</a></li>
+            <li><a href="rent-wanted-list.html"><i class="fas fa-search"></i> 求租信息</a></li>
+            <li><a href="publish.html"><i class="fas fa-plus-circle"></i> 发布房源</a></li>
+            <li><a href="rent-wanted-publish.html"><i class="fas fa-handshake"></i> 发布求租</a></li>
+            <li><a href="contact.html"><i class="fas fa-phone"></i> 关于我们</a></li>
+            <li style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--gray-200);">
+                <a href="tel:13379308568" style="color: #ef4444; font-weight: 700;">
+                    <i class="fas fa-phone-alt"></i> 13379308568
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- User Page -->
+    <section class="user-page">
+        <div class="container">
+            <!-- 登录检查 -->
+            <div class="login-required" id="login-required" style="display: none;">
+                <i class="fas fa-user-lock"></i>
+                <h2>请先登录</h2>
+                <p>登录后查看您的个人中心</p>
+                <a href="login.html" class="btn-call" style="display: inline-flex;">立即登录</a>
+                <a href="register.html" class="btn-call" style="display: inline-flex; background: #64748b; margin-left: 1rem;">立即注册</a>
+            </div>
+
+            <div class="user-grid" id="user-grid" style="display: none;">
+                <!-- Sidebar -->
+                <div class="user-sidebar">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                        <h3 id="user-name">用户</h3>
+                        <p id="user-phone">-</p>
+                    </div>
+                    <ul class="user-menu">
+                        <li><a href="#" class="active" data-section="listings"><i class="fas fa-building"></i> 我的房源</a></li>
+                        <li><a href="#" data-section="wanted"><i class="fas fa-search"></i> 我的求租</a></li>
+                        <li><a href="#" data-section="profile"><i class="fas fa-user-edit"></i> 修改资料</a></li>
+                        <li><a href="#" data-section="password"><i class="fas fa-lock"></i> 修改密码</a></li>
+                        <li><a href="#" id="logout-btn" style="color: #ef4444;"><i class="fas fa-sign-out-alt"></i> 退出登录</a></li>
+                    </ul>
+                </div>
+
+                <!-- Content -->
+                <div class="user-content">
+                    <!-- 我的房源 -->
+                    <div class="user-section active" id="section-listings">
+                        <h2 style="margin-bottom: 1.5rem;"><i class="fas fa-building"></i> 我的房源</h2>
+                        <div id="my-listings">
+                            <!-- Loaded by JS -->
+                        </div>
+                    </div>
+
+                    <!-- 我的求租 -->
+                    <div class="user-section" id="section-wanted">
+                        <h2 style="margin-bottom: 1.5rem;"><i class="fas fa-search"></i> 我的求租</h2>
+                        <div id="my-wanted">
+                            <!-- Loaded by JS -->
+                        </div>
+                    </div>
+
+                    <!-- 修改资料 -->
+                    <div class="user-section" id="section-profile">
+                        <h2 style="margin-bottom: 1.5rem;"><i class="fas fa-user-edit"></i> 修改资料</h2>
+                        <form id="profile-form" style="max-width: 500px;">
+                            <div class="form-group">
+                                <label>用户名</label>
+                                <input type="text" id="profile-username" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>手机号码</label>
+                                <input type="tel" id="profile-phone" pattern="1[3-9]\d{9}">
+                            </div>
+                            <button type="submit" class="btn-call" style="margin-top: 1rem;">保存修改</button>
+                        </form>
+                    </div>
+
+                    <!-- 修改密码 -->
+                    <div class="user-section" id="section-password">
+                        <h2 style="margin-bottom: 1.5rem;"><i class="fas fa-lock"></i> 修改密码</h2>
+                        <form id="password-form" style="max-width: 500px;">
+                            <div class="form-group">
+                                <label>当前密码</label>
+                                <input type="password" id="old-password" required>
+                            </div>
+                            <div class="form-group">
+                                <label>新密码</label>
+                                <input type="password" id="new-password" required minlength="6">
+                            </div>
+                            <div class="form-group">
+                                <label>确认新密码</label>
+                                <input type="password" id="confirm-password" required>
+                            </div>
+                            <button type="submit" class="btn-call" style="margin-top: 1rem;">修改密码</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© 园企汇 · 陕西厂房出租平台 · 客服热线：13379308568</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span id="toast-icon"><i class="fas fa-check-circle"></i></span>
+        <span id="toast-message">操作成功</span>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal" style="max-width:400px;">
+            <div style="text-align:center;margin-bottom:1rem;">
+                <i class="fas fa-user-circle" style="font-size:3rem;color:var(--primary);"></i>
+            </div>
+            <h3 style="text-align:center;">用户登录</h3>
+            <form id="login-form" style="margin-top:1.5rem;" onsubmit="return false;">
+                <div class="form-group">
+                    <label>用户名 / 手机号</label>
+                    <input type="text" id="login-username" placeholder="请输入用户名或手机号">
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <input type="password" id="login-password" placeholder="请输入密码">
+                </div>
+                <button type="button" class="btn-submit" style="width:100%;margin-top:1rem;" onclick="doLogin()">登录</button>
+            </form>
+            <form id="register-form" style="margin-top:1.5rem;display:none;" onsubmit="return false;">
+                <div class="form-group">
+                    <label>用户名</label>
+                    <input type="text" id="reg-username" placeholder="请设置用户名（4-20个字符）">
+                </div>
+                <div class="form-group">
+                    <label>手机号码</label>
+                    <input type="tel" id="reg-phone" placeholder="请输入11位手机号码">
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <input type="password" id="reg-password" placeholder="请设置登录密码（6-20个字符）">
+                </div>
+                <div class="form-group">
+                    <label>确认密码</label>
+                    <input type="password" id="reg-confirm-password" placeholder="请再次输入密码">
+                </div>
+                <button type="button" class="btn-submit" style="width:100%;margin-top:1rem;" onclick="doRegister()">注册</button>
+            </form>
+            <p style="text-align:center;margin-top:1rem;">
+                <a href="#" onclick="showRegister();return false;" style="color:var(--primary);">立即注册</a> &nbsp;|&nbsp; <a href="#" onclick="showLogin();return false;" style="color:var(--gray-500);">返回登录</a>
+            </p>
+            <button onclick="closeAuthModal()" style="position:absolute;top:15px;right:15px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--gray-400);">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+
+    <script src="js/auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+     <script src="js/main.js"></script>
+    <script>
+        function checkUserStatus() {
+            const session = localStorage.getItem('yqh_user');
+            const adminLink = document.getElementById('admin-link');
+            const userNameDisplay = document.getElementById('user-name-display');
+            const logoutLink = document.getElementById('logout-link');
+            const loginLink = document.getElementById('login-link');
+            const userCenterLink = document.getElementById('user-center-link');
+            
+            if (session) {
+                const user = JSON.parse(session);
+                userNameDisplay.textContent = user.username || user.phone;
+                
+                if (logoutLink) logoutLink.style.display = 'inline-flex';
+                if (loginLink) loginLink.style.display = 'none';
+                if (userCenterLink) userCenterLink.style.display = 'inline-flex';
+                
+                if (user.role === 'admin') {
+                    adminLink.style.display = 'inline-flex';
+                }
+            } else {
+                userNameDisplay.textContent = '用户中心';
+                if (logoutLink) logoutLink.style.display = 'none';
+                if (loginLink) loginLink.style.display = 'inline-flex';
+                if (userCenterLink) userCenterLink.style.display = 'inline-flex';
+                if (adminLink) adminLink.style.display = 'none';
+            }
+        }
+        
+        // 检查登录
+        function checkLogin() {
+            const session = localStorage.getItem('yqh_user');
+            const loginRequired = document.getElementById('login-required');
+            const userGrid = document.getElementById('user-grid');
+            const userNameDisplay = document.getElementById('user-name-display');
+            
+            if (!session) {
+                loginRequired.style.display = 'block';
+                userGrid.style.display = 'none';
+                return null;
+            }
+            
+            const user = JSON.parse(session);
+            loginRequired.style.display = 'none';
+            userGrid.style.display = 'grid';
+            
+            // 显示用户信息
+            document.getElementById('user-name').textContent = user.username || '用户';
+            document.getElementById('user-phone').textContent = user.phone || '-';
+            
+            // 设置导航用户名
+            if (userNameDisplay) {
+                userNameDisplay.textContent = user.username || user.phone;
+            }
+            
+            // 预填资料
+            document.getElementById('profile-username').value = user.username || '';
+            document.getElementById('profile-phone').value = user.phone || '';
+            
+            return user;
+        }
+
+        // 显示提示
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+            
+            toastMessage.textContent = message;
+            toast.className = `toast show ${type}`;
+            
+            if (type === 'success') {
+                toastIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            } else {
+                toastIcon.innerHTML = '<i class="fas fa-times-circle"></i>';
+            }
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // 格式化价格
+        function formatPrice(price) {
+            return price ? price.toLocaleString('zh-CN') : '0';
+        }
+
+        // 格式化日期
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+        }
+
+        // 获取数据
+        function getListings() {
+            const data = localStorage.getItem('yqh_listings');
+            return data ? JSON.parse(data) : [];
+        }
+
+        function getWantedList() {
+            const data = localStorage.getItem('yqh_rent_wanted');
+            return data ? JSON.parse(data) : [];
+        }
+
+        function getUsers() {
+            const data = localStorage.getItem('yqh_users');
+            return data ? JSON.parse(data) : [];
+        }
+
+        // 渲染我的房源
+        function renderMyListings() {
+            const session = localStorage.getItem('yqh_user');
+            if (!session) {
+                document.getElementById('my-listings').innerHTML = '<div class="empty-state"><p>请先登录</p></div>';
+                return;
+            }
+            
+            const user = JSON.parse(session);
+            console.log('当前用户:', user);
+            console.log('用户ID:', user.id);
+            
+            const allListings = getListings();
+            console.log('所有房源:', JSON.stringify(allListings, null, 2));
+            
+            // 调试信息
+            let debugInfo = '<div style="background:#f5f5f5;padding:10px;margin:10px 0;font-size:12px;"><strong>调试信息：</strong><br>';
+            debugInfo += '用户ID: ' + user.id + '<br>';
+            debugInfo += '房源数量: ' + allListings.length + '<br>';
+            if (allListings.length > 0) {
+                debugInfo += '房源IDs: ' + allListings.map(l => l.id + '(user_id:' + l.user_id + ')').join(', ') + '<br>';
+            }
+            debugInfo += '</div>';
+            
+            if (allListings.length === 0) {
+                document.getElementById('my-listings').innerHTML = debugInfo + `
+                    <div class="empty-state">
+                        <i class="fas fa-building"></i>
+                        <h4>暂无房源数据</h4>
+                        <p>请先发布房源</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const listings = allListings.filter(l => l.user_id === user.id || !l.user_id);
+            console.log('匹配房源:', listings);
+            
+            if (listings.length === 0) {
+                document.getElementById('my-listings').innerHTML = debugInfo + `
+                    <div class="empty-state">
+                        <i class="fas fa-building"></i>
+                        <h4>暂无发布的房源</h4>
+                        <p>你发布的房源user_id与当前登录用户不匹配</p>
+                        <a href="publish.html" class="btn-call" style="display: inline-flex; margin-top: 1rem;">发布房源</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            const container = document.getElementById('my-listings');
+            
+            container.innerHTML = listings.map(item => `
+                <div class="my-listings-card">
+                    <div class="my-listings-info">
+                        <h4><a href="detail.html?id=${item.id}" target="_blank" style="color: var(--gray-800);">${item.title}</a></h4>
+                        <p>${item.region} · ${item.area}㎡ · ¥${formatPrice(item.price)}/月 · ${formatDate(item.timestamp)}</p>
+                    </div>
+                    <div class="my-listings-actions">
+                        <span class="status-badge status-${item.status}">${item.status === 'approved' ? '已发布' : item.status === 'pending' ? '审核中' : '已拒绝'}</span>
+                        <button class="btn-delete" onclick="deleteMyListing('${item.id}')"><i class="fas fa-trash"></i> 删除</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 渲染我的求租
+        function renderMyWanted() {
+            const session = localStorage.getItem('yqh_user');
+            if (!session) return;
+            
+            const user = JSON.parse(session);
+            const wanted = getWantedList().filter(w => w.user_id === user.id || !w.user_id);
+            const container = document.getElementById('my-wanted');
+            
+            if (wanted.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <h4>暂无发布的求租信息</h4>
+                        <a href="rent-wanted-publish.html" class="btn-call" style="display: inline-flex; margin-top: 1rem;">发布求租</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = wanted.map(item => `
+                <div class="my-listings-card">
+                    <div class="my-listings-info">
+                        <h4><a href="rent-wanted-detail.html?id=${item.id}" target="_blank" style="color: var(--gray-800);">${item.title}</a></h4>
+                        <p>${item.region} · ${item.area}㎡ · ¥${formatPrice(item.budget)}/月 · ${formatDate(item.timestamp)}</p>
+                    </div>
+                    <div class="my-listings-actions">
+                        <span class="status-badge status-${item.status}">${item.status === 'approved' ? '已发布' : item.status === 'pending' ? '审核中' : '已拒绝'}</span>
+                        <button class="btn-delete" onclick="deleteMyWanted('${item.id}')"><i class="fas fa-trash"></i> 删除</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 删除我的房源
+        function deleteMyListing(id) {
+            const session = localStorage.getItem('yqh_user');
+            if (!session) {
+                alert('请先登录');
+                return;
+            }
+            const user = JSON.parse(session);
+            
+            const listings = getListings();
+            const listing = listings.find(l => l.id === id);
+            
+            if (!listing) {
+                alert('房源不存在');
+                return;
+            }
+            
+            // 验证是否是自己的房源（没有user_id的也可以删除）
+            if (listing.user_id && listing.user_id !== user.id) {
+                alert('您只能删除自己发布的房源');
+                return;
+            }
+            
+            if (confirm('确定删除此房源吗？')) {
+                let list = getListings();
+                list = list.filter(l => l.id !== id);
+                localStorage.setItem('yqh_listings', JSON.stringify(list));
+                showToast('删除成功');
+                renderMyListings();
+            }
+        }
+
+        // 删除我的求租
+        function deleteMyWanted(id) {
+            const session = localStorage.getItem('yqh_user');
+            if (!session) {
+                alert('请先登录');
+                return;
+            }
+            const user = JSON.parse(session);
+            
+            const wanted = getWantedList();
+            const item = wanted.find(w => w.id === id);
+            
+            if (!item) {
+                alert('求租信息不存在');
+                return;
+            }
+            
+            // 验证是否是自己的求租（没有user_id的也可以删除）
+            if (item.user_id && item.user_id !== user.id) {
+                alert('您只能删除自己发布的求租信息');
+                return;
+            }
+            
+            if (confirm('确定删除此求租信息吗？')) {
+                let list = getWantedList();
+                list = list.filter(w => w.id !== id);
+                localStorage.setItem('yqh_rent_wanted', JSON.stringify(list));
+                showToast('删除成功');
+                renderMyWanted();
+            }
+        }
+
+        // 修改资料
+        document.getElementById('profile-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const session = localStorage.getItem('yqh_user');
+            const user = JSON.parse(session);
+            const phone = document.getElementById('profile-phone').value;
+            
+            // 更新本地存储
+            const users = getUsers();
+            const index = users.findIndex(u => u.id === user.id);
+            if (index !== -1) {
+                users[index].phone = phone;
+                localStorage.setItem('yqh_users', JSON.stringify(users));
+            }
+            
+            // 更新session
+            user.phone = phone;
+            localStorage.setItem('yqh_user', JSON.stringify(user));
+            
+            showToast('资料修改成功');
+            document.getElementById('user-phone').textContent = phone;
+        });
+
+        // 修改密码
+        document.getElementById('password-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const oldPassword = document.getElementById('old-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (newPassword !== confirmPassword) {
+                showToast('两次输入的密码不一致', 'error');
+                return;
+            }
+            
+            const session = localStorage.getItem('yqh_user');
+            const user = JSON.parse(session);
+            
+            // 验证旧密码
+            const users = getUsers();
+            const index = users.findIndex(u => u.id === user.id);
+            if (index !== -1 && users[index].password !== btoa(oldPassword)) {
+                showToast('当前密码错误', 'error');
+                return;
+            }
+            
+            // 更新密码
+            if (index !== -1) {
+                users[index].password = btoa(newPassword);
+                localStorage.setItem('yqh_users', JSON.stringify(users));
+            }
+            
+            showToast('密码修改成功');
+            this.reset();
+        });
+
+        // 退出登录
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (confirm('确定要退出登录吗？')) {
+                localStorage.removeItem('yqh_user');
+                window.location.href = 'index.html';
+            }
+        });
+
+        // 菜单切换
+        document.querySelectorAll('.user-menu a[data-section]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                document.querySelectorAll('.user-menu a').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                
+                document.querySelectorAll('.user-section').forEach(s => s.classList.remove('active'));
+                document.getElementById('section-' + this.dataset.section).classList.add('active');
+            });
+        });
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLogin();
+            initAuth();
+            checkUserStatus();
+            renderMyListings();
+            renderMyWanted();
+            
+            // 移动端菜单
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const closeBtn = document.getElementById('mobile-nav-close');
+            const mobileNav = document.getElementById('mobile-nav');
+            const overlay = document.getElementById('mobile-nav-overlay');
+            
+            if (menuBtn && mobileNav) {
+                menuBtn.addEventListener('click', () => {
+                    mobileNav.classList.add('active');
+                    overlay.classList.add('active');
+                });
+                
+                if (closeBtn) closeBtn.addEventListener('click', () => {
+                    mobileNav.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+                if (overlay) overlay.addEventListener('click', () => {
+                    mobileNav.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+            }
+            
+            // 用户中心下拉菜单点击事件
+            var userDropdown = document.getElementById('user-dropdown');
+            var userDropdownBtn = document.getElementById('user-dropdown-btn');
+            if (userDropdown && userDropdownBtn) {
+                userDropdownBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    userDropdown.classList.toggle('active');
+                });
+                document.addEventListener('click', function(e) {
+                    if (!userDropdown.contains(e.target)) {
+                        userDropdown.classList.remove('active');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

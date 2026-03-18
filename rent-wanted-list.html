@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>求租信息 - 园企汇陕西厂房出租网</title>
+    <meta name="description" content="陕西厂房仓库求租信息列表，找厂房上园企汇">
+    <meta name="keywords" content="陕西求租厂房,西安仓库求租,陕西厂房出租">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .wanted-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+            border: 1px solid #e2e8f0;
+        }
+        .wanted-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .wanted-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .wanted-card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+        }
+        .wanted-card-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .wanted-card-title a:hover {
+            color: #1e40af;
+        }
+        .wanted-card-region {
+            background: #eff6ff;
+            color: #1e40af;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+        }
+        .wanted-card-body {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+        .wanted-card-item {
+            text-align: center;
+        }
+        .wanted-card-item label {
+            display: block;
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-bottom: 0.25rem;
+        }
+        .wanted-card-item span {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .wanted-card-item.budget span {
+            color: #f59e0b;
+        }
+        .wanted-card-desc {
+            color: #64748b;
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .wanted-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        .wanted-card-time {
+            font-size: 0.8125rem;
+            color: #94a3b8;
+        }
+        .wanted-card-contact {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .wanted-card-phone {
+            color: #1e40af;
+            font-weight: 500;
+        }
+        .wanted-card-phone.hidden {
+            color: #94a3b8;
+        }
+        .btn-view-detail {
+            background: #1e40af;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-view-detail:hover {
+            background: #1e3a8a;
+        }
+        @media (max-width: 768px) {
+            .wanted-card-body {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <span><i class="fas fa-map-marker-alt"></i> 陕西厂房出租信息平台</span>
+                <span style="float: right;"><i class="fas fa-clock"></i> 工作时间: 9:00-18:00</span>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h1>园企汇</h1>
+                            <span>陕西厂房仓库出租网</span>
+                        </div>
+                    </a>
+                    
+                    <nav class="nav-menu">
+                        <a href="index.html"><i class="fas fa-home"></i> 首页</a>
+                        <a href="listings.html"><i class="fas fa-building"></i> 房源信息</a>
+                        <a href="rent-wanted-list.html" class="active"><i class="fas fa-search"></i> 求租信息</a>
+                        <a href="publish.html"><i class="fas fa-plus-circle"></i> 发布房源</a>
+                        <a href="rent-wanted-publish.html"><i class="fas fa-handshake"></i> 发布求租</a>
+                        <a href="user.html" id="user-center-link"><i class="fas fa-user-circle"></i> <span id="user-name-display">用户中心</span></a>
+                        <a href="#" onclick="showLoginModal(); return false;" id="login-link"><i class="fas fa-sign-in-alt"></i> 登录/注册</a>
+                        <a href="#" onclick="logout(); return false;" style="color: #ef4444; display: none;" id="logout-link"><i class="fas fa-sign-out-alt"></i> 退出</a>
+                        <a href="admin.html" id="admin-link" style="display:none;"><i class="fas fa-cog"></i> 管理</a>
+                    </nav>
+                    
+                    <a href="tel:13379308568" class="hotline-btn">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>13379308568</span>
+                    </a>
+                    
+                    <button class="mobile-menu-btn" id="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+    <div class="mobile-nav" id="mobile-nav">
+        <div class="mobile-nav-header">
+            <h3><i class="fas fa-bars"></i> 导航菜单</h3>
+            <button class="mobile-nav-close" id="mobile-nav-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> 首页</a></li>
+            <li><a href="listings.html"><i class="fas fa-building"></i> 房源信息</a></li>
+            <li><a href="rent-wanted-list.html"><i class="fas fa-search"></i> 求租信息</a></li>
+            <li><a href="publish.html"><i class="fas fa-plus-circle"></i> 发布房源</a></li>
+            <li><a href="rent-wanted-publish.html"><i class="fas fa-handshake"></i> 发布求租</a></li>
+            <li><a href="contact.html"><i class="fas fa-phone"></i> 关于我们</a></li>
+            <li style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--gray-200);">
+                <a href="tel:13379308568" style="color: #ef4444; font-weight: 700;">
+                    <i class="fas fa-phone-alt"></i> 13379308568
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Page Title -->
+    <section class="page-title">
+        <div class="container">
+            <h2><i class="fas fa-search"></i> 求租信息</h2>
+            <p>覆盖西安、咸阳、宝鸡、渭南、榆林等城市</p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <label>需求地区</label>
+                    <select id="filter-region">
+                        <option value="">全部地区</option>
+                        <option value="西安">西安</option>
+                        <option value="咸阳">咸阳</option>
+                        <option value="宝鸡">宝鸡</option>
+                        <option value="渭南">渭南</option>
+                        <option value="榆林">榆林</option>
+                        <option value="延安">延安</option>
+                        <option value="汉中">汉中</option>
+                        <option value="安康">安康</option>
+                        <option value="商洛">商洛</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>面积需求</label>
+                    <select id="filter-area">
+                        <option value="">不限</option>
+                        <option value="0-500">500㎡以下</option>
+                        <option value="500-1000">500-1000㎡</option>
+                        <option value="1000-2000">1000-2000㎡</option>
+                        <option value="2000-99999">2000㎡以上</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>预算范围</label>
+                    <select id="filter-budget">
+                        <option value="">不限</option>
+                        <option value="0-10000">1万以下</option>
+                        <option value="10000-20000">1万-2万</option>
+                        <option value="20000-50000">2万-5万</option>
+                        <option value="50000-999999">5万以上</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>需求类型</label>
+                    <select id="filter-type">
+                        <option value="">不限</option>
+                        <option value="标准厂房">标准厂房</option>
+                        <option value="仓库">仓库</option>
+                        <option value="车间">车间</option>
+                        <option value="钢结构厂房">钢结构厂房</option>
+                        <option value="厂房+办公">厂房+办公</option>
+                        <option value="都行">都可</option>
+                    </select>
+                </div>
+                <button class="btn-call" onclick="applyFilters()">
+                    <i class="fas fa-search"></i> 搜索
+                </button>
+                <a href="rent-wanted-publish.html" class="btn-call" style="background: #f59e0b;">
+                    <i class="fas fa-plus"></i> 发布求租
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wanted List -->
+    <section class="listings-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-search"></i>
+                    <div>
+                        <h2>求租信息</h2>
+                        <p>找到最适合您的厂房</p>
+                    </div>
+                </div>
+                <span id="total-count" style="color: #64748b;">共 0 条求租信息</span>
+            </div>
+
+            <div id="wanted-list">
+                <!-- Loaded by JS -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination" style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3><i class="fas fa-industry"></i> 园企汇</h3>
+                    <p>陕西厂房仓库出租信息平台，覆盖全省九大城市。真实房源，免费发布，助力企业快速找到合适厂房。</p>
+                    <a href="tel:13379308568" class="hotline">
+                        <i class="fas fa-phone-alt"></i> 13379308568
+                    </a>
+                </div>
+                <div class="footer-column">
+                    <h4>快速导航</h4>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-angle-right"></i> 网站首页</a></li>
+                        <li><a href="listings.html"><i class="fas fa-angle-right"></i> 房源列表</a></li>
+                        <li><a href="rent-wanted-list.html"><i class="fas fa-angle-right"></i> 求租信息</a></li>
+                        <li><a href="publish.html"><i class="fas fa-angle-right"></i> 免费发布</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>热门城市</h4>
+                    <ul>
+                        <li><a href="listings.html?region=西安"><i class="fas fa-angle-right"></i> 西安厂房出租</a></li>
+                        <li><a href="listings.html?region=咸阳"><i class="fas fa-angle-right"></i> 咸阳厂房出租</a></li>
+                        <li><a href="listings.html?region=宝鸡"><i class="fas fa-angle-right"></i> 宝鸡厂房出租</a></li>
+                        <li><a href="listings.html?region=榆林"><i class="fas fa-angle-right"></i> 榆林厂房出租</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>关注我们</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> 关于我们</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> 服务条款</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> 隐私政策</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> 网站地图</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 园企汇 · 陕西厂房出租平台 · 客服热线：<a href="tel:13379308568">13379308568</a></p>
+                <p>陕ICP备XXXXXXXX号 · Powered by 园企汇</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span id="toast-icon"><i class="fas fa-check-circle"></i></span>
+        <span id="toast-message">操作成功</span>
+    </div>
+
+
+    <script src="js/auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+     <script src="js/main.js"></script>
+    <style>
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .empty-state i {
+            font-size: 4rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+        .empty-state h4 {
+            font-size: 1.25rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+        .empty-state p {
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+    </style>
+    <script>
+        // 用户状态检查
+        function checkUserStatus() {
+            const session = localStorage.getItem('yqh_user');
+            const adminLink = document.getElementById('admin-link');
+            const userNameDisplay = document.getElementById('user-name-display');
+            const logoutLink = document.getElementById('logout-link');
+            const loginLink = document.getElementById('login-link');
+            
+            if (session) {
+                const user = JSON.parse(session);
+                userNameDisplay.textContent = user.username || user.phone;
+                
+                if (logoutLink) logoutLink.style.display = 'block';
+                if (loginLink) loginLink.style.display = 'none';
+                
+                if (user.role === 'admin') {
+                    adminLink.style.display = 'inline-flex';
+                }
+            } else {
+                userNameDisplay.textContent = '用户中心';
+                if (logoutLink) logoutLink.style.display = 'none';
+                if (loginLink) loginLink.style.display = 'block';
+                if (adminLink) adminLink.style.display = 'none';
+            }
+        }
+
+        // 获取URL参数
+        function getUrlParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // 获取求租列表
+        function getWantedList() {
+            const data = localStorage.getItem('yqh_rent_wanted');
+            return data ? JSON.parse(data) : [];
+        }
+        
+        // 获取已审核通过的求租
+        function getApprovedWanted() {
+            const list = getWantedList();
+            return list.filter(item => item.status === 'approved');
+        }
+
+        // 格式化价格
+        function formatPrice(price) {
+            if (!price) return '面议';
+            return price.toLocaleString('zh-CN');
+        }
+
+        // 格式化日期
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+        }
+
+        // 渲染求租卡片
+        function renderWantedCard(item) {
+            const isLoggedIn = !!localStorage.getItem('yqh_user');
+            const contact = isLoggedIn ? item.contact : item.contact.substring(0, 3) + '****' + item.contact.substring(7);
+            
+            return `
+                <div class="wanted-card">
+                    <div class="wanted-card-header">
+                        <h3 class="wanted-card-title">
+                            <a href="rent-wanted-detail.html?id=${item.id}">${item.title}</a>
+                        </h3>
+                        <span class="wanted-card-region">${item.region}</span>
+                    </div>
+                    <div class="wanted-card-body">
+                        <div class="wanted-card-item">
+                            <label>需求面积</label>
+                            <span>${item.area}㎡</span>
+                        </div>
+                        <div class="wanted-card-item">
+                            <label>期望层高</label>
+                            <span>${item.height || 6}米</span>
+                        </div>
+                        <div class="wanted-card-item budget">
+                            <label>预算范围</label>
+                            <span>¥${formatPrice(item.budget)}/月</span>
+                        </div>
+                        <div class="wanted-card-item">
+                            <label>需求类型</label>
+                            <span>${item.type}</span>
+                        </div>
+                    </div>
+                    <p class="wanted-card-desc">${item.description}</p>
+                    <div class="wanted-card-footer">
+                        <span class="wanted-card-time"><i class="fas fa-clock"></i> ${formatDate(item.timestamp)}</span>
+                        <div class="wanted-card-contact">
+                            <span class="wanted-card-phone ${isLoggedIn ? '' : 'hidden'}">
+                                <i class="fas fa-phone"></i> ${contact}
+                            </span>
+                            ${!isLoggedIn ? '<span style="font-size: 0.75rem; color: #94a3b8;">登录查看</span>' : ''}
+                            <a href="rent-wanted-detail.html?id=${item.id}" class="btn-view-detail">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 筛选求租信息
+        function filterWanted(list, filters) {
+            return list.filter(item => {
+                if (filters.region && filters.region !== '' && item.region !== filters.region) {
+                    return false;
+                }
+                if (filters.type && filters.type !== '' && item.type !== filters.type) {
+                    return false;
+                }
+                if (filters.areaMin) {
+                    const areaMin = parseInt(filters.areaMin);
+                    if (item.area < areaMin) return false;
+                }
+                if (filters.areaMax) {
+                    const areaMax = parseInt(filters.areaMax);
+                    if (item.area > areaMax) return false;
+                }
+                if (filters.budgetMin) {
+                    const budgetMin = parseInt(filters.budgetMin);
+                    if (!item.budget || item.budget < budgetMin) return false;
+                }
+                if (filters.budgetMax) {
+                    const budgetMax = parseInt(filters.budgetMax);
+                    if (item.budget > budgetMax) return false;
+                }
+                return true;
+            });
+        }
+
+        // 应用筛选
+        async function applyFilters() {
+            const region = document.getElementById('filter-region').value;
+            const area = document.getElementById('filter-area').value;
+            const budget = document.getElementById('filter-budget').value;
+            const type = document.getElementById('filter-type').value;
+            
+            let url = '?';
+            if (region) url += `region=${region}&`;
+            if (area) url += `area=${area}&`;
+            if (budget) url += `budget=${budget}&`;
+            if (type) url += `type=${type}&`;
+            
+            // 直接渲染，不跳转
+            await renderList();
+        }
+
+        // 从云端获取已批准的求租
+        async function getApprovedWantedFromDB() {
+            try {
+                const supabase = getSupabase();
+                const { data, error } = await supabase
+                    .from('rent_wanted')
+                    .select('*')
+                    .eq('status', 'approved')
+                    .order('created_at', { ascending: false });
+                if (error) {
+                    console.log('从云端获取求租信息失败:', error);
+                    return [];
+                }
+                console.log('从云端获取到求租信息:', data?.length || 0, '条');
+                return data || [];
+            } catch (err) {
+                console.log('从云端获取求租信息异常:', err);
+                return [];
+            }
+        }
+
+        // 渲染列表
+        async function renderList() {
+            // 从云端获取数据
+            let wanted = await getApprovedWantedFromDB();
+            
+            // 同时合并本地数据
+            const localWanted = getApprovedWanted();
+            localWanted.forEach(item => {
+                if (!wanted.find(w => w.id === item.id)) {
+                    wanted.push(item);
+                }
+            });
+            
+            // 如果有数据，清除加载提示
+            if (wanted.length > 0) {
+                const container = document.getElementById('wanted-list');
+                if (container && container.querySelector('#debug-info')) {
+                    container.innerHTML = '';
+                }
+            }
+            
+            // URL筛选
+            const region = getUrlParam('region');
+            const area = getUrlParam('area');
+            const budget = getUrlParam('budget');
+            const type = getUrlParam('type');
+            
+            const filters = {};
+            if (region) filters.region = region;
+            if (type) filters.type = type;
+            if (area) {
+                const [min, max] = area.split('-');
+                filters.areaMin = min;
+                filters.areaMax = max;
+            }
+            if (budget) {
+                const [min, max] = budget.split('-');
+                filters.budgetMin = min;
+                filters.budgetMax = max;
+            }
+            
+            if (Object.keys(filters).length > 0) {
+                wanted = filterWanted(wanted, filters);
+            }
+            
+            // 排序
+            wanted.sort((a, b) => (b.created_at || b.timestamp) - (a.created_at || a.timestamp));
+            
+            // 更新总数
+            document.getElementById('total-count').textContent = `共 ${wanted.length} 条求租信息`;
+            
+            // 渲染
+            const container = document.getElementById('wanted-list');
+            if (wanted.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <h4>暂无符合条件的求租信息</h4>
+                        <p>请尝试调整筛选条件或发布您的求租信息</p>
+                        <a href="rent-wanted-publish.html" class="btn-call" style="display: inline-flex; margin-top: 1rem;">发布求租</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = wanted.map(item => renderWantedCard(item)).join('');
+        }
+
+        // 初始化筛选器
+        function initFilters() {
+            try {
+                const region = getUrlParam('region');
+                const type = getUrlParam('type');
+                const area = getUrlParam('area');
+                const budget = getUrlParam('budget');
+                
+                if (region) document.getElementById('filter-region').value = region;
+                if (type) document.getElementById('filter-type').value = type;
+                if (area) document.getElementById('filter-area').value = area;
+                if (budget) document.getElementById('filter-budget').value = budget;
+            } catch(e) {}
+        }
+        
+        // 页面初始化
+        function initListingPage() {
+            initFilters();
+            renderList();
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initListingPage();
+            
+            // 每3秒自动刷新
+            setInterval(function() {
+                renderList();
+            }, 3000);
+            
+            // 移动端菜单
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const closeBtn = document.getElementById('mobile-nav-close');
+            const mobileNav = document.getElementById('mobile-nav');
+            const overlay = document.getElementById('mobile-nav-overlay');
+            
+            if (menuBtn && mobileNav) {
+                menuBtn.addEventListener('click', () => {
+                    mobileNav.classList.add('active');
+                    overlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+                
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => {
+                        mobileNav.classList.remove('active');
+                        overlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                    });
+                }
+                
+                if (overlay) {
+                    overlay.addEventListener('click', () => {
+                        mobileNav.classList.remove('active');
+                        overlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                    });
+                }
+            }
+        });
+        
+        // 初始化
+        checkUserStatus();
+        
+        // 用户中心下拉菜单点击事件
+        var userDropdown = document.getElementById('user-dropdown');
+        var userDropdownBtn = document.getElementById('user-dropdown-btn');
+        if (userDropdown && userDropdownBtn) {
+            userDropdownBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                userDropdown.classList.toggle('active');
+            });
+            document.addEventListener('click', function(e) {
+                if (!userDropdown.contains(e.target)) {
+                    userDropdown.classList.remove('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

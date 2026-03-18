@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 - 园企汇陕西厂房出租网</title>
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .admin-login-required {
+            text-align: center;
+            padding: 8rem 2rem;
+        }
+        .admin-login-required i {
+            font-size: 5rem;
+            color: var(--gray-200);
+            margin-bottom: 2rem;
+        }
+        .admin-login-required h2 {
+            margin-bottom: 1rem;
+        }
+        .admin-login-required p {
+            color: var(--gray-500);
+            margin-bottom: 2rem;
+        }
+        .admin-content {
+            display: none;
+        }
+        .export-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .export-btn:hover {
+            background: #059669;
+        }
+        .admin-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--gray-200);
+            padding-bottom: 0.5rem;
+        }
+        .admin-tab {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray-600);
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s;
+        }
+        .admin-tab:hover {
+            color: var(--primary);
+        }
+        .admin-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        .admin-section-content {
+            display: none;
+        }
+        .admin-section-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-main" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark));">
+            <div class="container">
+                <div class="header-content">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon" style="background: linear-gradient(135deg, var(--accent), var(--accent-dark));">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h1 style="color: white;">园企汇</h1>
+                            <span style="color: rgba(255,255,255,0.7);">管理后台</span>
+                        </div>
+                    </a>
+                    <nav class="nav-menu">
+                        <a href="index.html" style="color: rgba(255,255,255,0.9);"><i class="fas fa-home"></i> 返回首页</a>
+                        <a href="#" id="admin-logout" style="color: rgba(255,255,255,0.9);"><i class="fas fa-sign-out-alt"></i> 退出</a>
+                    </nav>
+                    <a href="tel:13379308568" class="hotline-btn" style="background: white; color: var(--primary);">
+                        <i class="fas fa-phone-alt"></i><span>13379308568</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Admin Section -->
+    <section class="admin-section" style="margin-top: 70px;">
+        <div class="container">
+            <!-- 登录检查 -->
+            <div class="admin-login-required" id="admin-login-required">
+                <i class="fas fa-user-shield"></i>
+                <h2>管理员登录</h2>
+                <p>请使用管理员账号登录管理后台</p>
+                <a href="login.html?redirect=admin.html" class="btn-call" style="display: inline-flex;">立即登录</a>
+            </div>
+
+            <!-- 管理员内容 -->
+            <div class="admin-content" id="admin-content">
+                <div class="admin-header">
+                    <h2><i class="fas fa-cog"></i> 内容管理后台</h2>
+                    <button class="export-btn" onclick="exportToExcel()">
+                        <i class="fas fa-file-excel"></i> 导出Excel
+                    </button>
+                </div>
+                
+                <!-- Admin Tabs -->
+                <div class="admin-tabs">
+                    <button class="admin-tab active" data-tab="listings"><i class="fas fa-building"></i> 房源信息</button>
+                    <button class="admin-tab" data-tab="wanted"><i class="fas fa-search"></i> 求租信息</button>
+                    <button class="admin-tab" data-tab="users"><i class="fas fa-users"></i> 用户管理</button>
+                </div>
+                
+                <!-- Listings Section -->
+                <div class="admin-section-content active" id="section-listings">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3 id="stat-total">0</h3>
+                            <p>房源总数</p>
+                        </div>
+                        <div class="stat-card pending">
+                            <h3 id="stat-pending">0</h3>
+                            <p>待审核</p>
+                        </div>
+                        <div class="stat-card approved">
+                            <h3 id="stat-approved">0</h3>
+                            <p>已发布</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="stat-rejected">0</h3>
+                            <p>已拒绝</p>
+                        </div>
+                    </div>
+                    
+                    <div class="admin-table">
+                        <div class="table-header">
+                            <div class="table-tabs">
+                                <button class="table-tab active" data-tab="all"><i class="fas fa-list"></i> 全部</button>
+                                <button class="table-tab" data-tab="pending"><i class="fas fa-clock"></i> 待审核</button>
+                                <button class="table-tab" data-tab="approved"><i class="fas fa-check-circle"></i> 已发布</button>
+                            </div>
+                            <input type="text" id="search-keyword" placeholder="搜索标题...">
+                        </div>
+                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>房源标题</th>
+                                    <th>地区</th>
+                                    <th>面积</th>
+                                    <th>租金</th>
+                                    <th>类型</th>
+                                    <th>状态</th>
+                                    <th>发布时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listings-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Wanted Section -->
+                <div class="admin-section-content" id="section-wanted">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3 id="wanted-stat-total">0</h3>
+                            <p>求租总数</p>
+                        </div>
+                        <div class="stat-card pending">
+                            <h3 id="wanted-stat-pending">0</h3>
+                            <p>待审核</p>
+                        </div>
+                        <div class="stat-card approved">
+                            <h3 id="wanted-stat-approved">0</h3>
+                            <p>已发布</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="wanted-stat-rejected">0</h3>
+                            <p>已拒绝</p>
+                        </div>
+                    </div>
+                    
+                    <div class="admin-table">
+                        <div class="table-header">
+                            <div class="table-tabs">
+                                <button class="table-tab active" data-tab="all"><i class="fas fa-list"></i> 全部</button>
+                                <button class="table-tab" data-tab="pending"><i class="fas fa-clock"></i> 待审核</button>
+                                <button class="table-tab" data-tab="approved"><i class="fas fa-check-circle"></i> 已发布</button>
+                            </div>
+                            <input type="text" id="wanted-search-keyword" placeholder="搜索标题...">
+                        </div>
+                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>求租标题</th>
+                                    <th>地区</th>
+                                    <th>面积</th>
+                                    <th>预算</th>
+                                    <th>类型</th>
+                                    <th>状态</th>
+                                    <th>发布时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="wanted-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Users Section -->
+                <div class="admin-section-content" id="section-users">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3 id="user-stat-total">0</h3>
+                            <p>用户总数</p>
+                        </div>
+                        <div class="stat-card approved">
+                            <h3 id="user-stat-active">0</h3>
+                            <p>活跃用户</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="user-stat-admin">0</h3>
+                            <p>管理员</p>
+                        </div>
+                    </div>
+                    
+                    <div class="admin-table">
+                        <div class="table-header">
+                            <input type="text" id="user-search-keyword" placeholder="搜索用户名或手机号...">
+                        </div>
+                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>用户名</th>
+                                    <th>手机号</th>
+                                    <th>角色</th>
+                                    <th>注册时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© 园企汇 · 管理后台</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span id="toast-icon"><i class="fas fa-check-circle"></i></span>
+        <span id="toast-message">操作成功</span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // 检查管理员权限
+        function checkAdminAuth() {
+            const session = localStorage.getItem('yqh_user');
+            const loginRequired = document.getElementById('admin-login-required');
+            const adminContent = document.getElementById('admin-content');
+            
+            if (!session) {
+                loginRequired.style.display = 'block';
+                adminContent.style.display = 'none';
+                return false;
+            }
+            
+            const user = JSON.parse(session);
+            if (user.role !== 'admin') {
+                loginRequired.innerHTML = `
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h2>权限不足</h2>
+                    <p>只有管理员才能访问后台</p>
+                    <a href="index.html" class="btn-call" style="display: inline-flex;">返回首页</a>
+                `;
+                loginRequired.style.display = 'block';
+                adminContent.style.display = 'none';
+                return false;
+            }
+            
+            loginRequired.style.display = 'none';
+            adminContent.style.display = 'block';
+            return true;
+        }
+
+        // 显示提示
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+            
+            toastMessage.textContent = message;
+            toast.className = `toast show ${type}`;
+            
+            if (type === 'success') {
+                toastIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            } else {
+                toastIcon.innerHTML = '<i class="fas fa-times-circle"></i>';
+            }
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // 格式化价格
+        function formatPrice(price) {
+            return price ? price.toLocaleString('zh-CN') : '0';
+        }
+
+        // 格式化日期
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+        }
+
+        // 获取数据
+        function getListings() {
+            const data = localStorage.getItem('yqh_listings');
+            return data ? JSON.parse(data) : [];
+        }
+
+        function getWantedList() {
+            const data = localStorage.getItem('yqh_rent_wanted');
+            return data ? JSON.parse(data) : [];
+        }
+
+        function getUsers() {
+            const data = localStorage.getItem('yqh_users');
+            return data ? JSON.parse(data) : [];
+        }
+
+        // 房源管理
+        let listingsTab = 'all';
+        let listingsKeyword = '';
+
+        function updateListingsStats() {
+            const listings = getListings();
+            document.getElementById('stat-total').textContent = listings.length;
+            document.getElementById('stat-pending').textContent = listings.filter(l => l.status === 'pending').length;
+            document.getElementById('stat-approved').textContent = listings.filter(l => l.status === 'approved').length;
+            document.getElementById('stat-rejected').textContent = listings.filter(l => l.status === 'rejected').length;
+        }
+
+        function renderListingsTable() {
+            let listings = getListings();
+            
+            if (listingsTab === 'pending') listings = listings.filter(l => l.status === 'pending');
+            else if (listingsTab === 'approved') listings = listings.filter(l => l.status === 'approved');
+            
+            if (listingsKeyword) {
+                listings = listings.filter(l => l.title.toLowerCase().includes(listingsKeyword.toLowerCase()));
+            }
+            
+            listings.sort((a, b) => b.timestamp - a.timestamp);
+            
+            const tbody = document.getElementById('listings-table-body');
+            
+            if (listings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 3rem; color: var(--gray-400);">暂无数据</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = listings.map(item => `
+                <tr>
+                    <td><a href="detail.html?id=${item.id}" target="_blank" style="color: var(--primary); font-weight: 500;">${item.title}</a></td>
+                    <td><span style="background: var(--primary-50); padding: 0.25rem 0.625rem; border-radius: var(--radius); font-size: 0.8125rem;">${item.region}</span></td>
+                    <td>${item.area}㎡</td>
+                    <td style="color: var(--accent); font-weight: 700;">¥${formatPrice(item.price)}/月</td>
+                    <td>${item.type}</td>
+                    <td><span style="padding: 0.25rem 0.625rem; border-radius: var(--radius); font-size: 0.8125rem; ${
+                        item.status === 'approved' ? 'background: #d1fae5; color: #065f46;' : 
+                        item.status === 'pending' ? 'background: #fef3c7; color: #92400e;' : 
+                        'background: #fee2e2; color: #991b1b;'
+                    }">${item.status === 'approved' ? '已发布' : item.status === 'pending' ? '待审核' : '已拒绝'}</span></td>
+                    <td style="color: var(--gray-500); font-size: 0.875rem;">${formatDate(item.timestamp)}</td>
+                    <td>
+                        <div class="table-actions">
+                            ${item.status === 'pending' ? `<button class="btn-approve" onclick="approveListing('${item.id}')"><i class="fas fa-check"></i> 通过</button>` : ''}
+                            ${item.status === 'pending' ? `<button class="btn-delete" onclick="rejectListing('${item.id}')"><i class="fas fa-times"></i> 拒绝</button>` : ''}
+                            <button class="btn-delete" onclick="deleteListingConfirm('${item.id}')"><i class="fas fa-trash"></i> 删除</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function approveListing(id) {
+            const listings = getListings();
+            const index = listings.findIndex(l => l.id === id);
+            if (index !== -1) {
+                listings[index].status = 'approved';
+                localStorage.setItem('yqh_listings', JSON.stringify(listings));
+                showToast('审核通过');
+                updateListingsStats();
+                renderListingsTable();
+            }
+        }
+
+        function rejectListing(id) {
+            if (confirm('确定拒绝此房源吗？')) {
+                const listings = getListings();
+                const index = listings.findIndex(l => l.id === id);
+                if (index !== -1) {
+                    listings[index].status = 'rejected';
+                    localStorage.setItem('yqh_listings', JSON.stringify(listings));
+                    showToast('已拒绝');
+                    updateListingsStats();
+                    renderListingsTable();
+                }
+            }
+        }
+
+        function deleteListingConfirm(id) {
+            if (confirm('确定删除此房源吗？此操作不可恢复。')) {
+                let listings = getListings();
+                listings = listings.filter(l => l.id !== id);
+                localStorage.setItem('yqh_listings', JSON.stringify(listings));
+                showToast('删除成功');
+                updateListingsStats();
+                renderListingsTable();
+            }
+        }
+
+        // 求租管理
+        let wantedTab = 'all';
+        let wantedKeyword = '';
+
+        function updateWantedStats() {
+            const wanted = getWantedList();
+            document.getElementById('wanted-stat-total').textContent = wanted.length;
+            document.getElementById('wanted-stat-pending').textContent = wanted.filter(w => w.status === 'pending').length;
+            document.getElementById('wanted-stat-approved').textContent = wanted.filter(w => w.status === 'approved').length;
+            document.getElementById('wanted-stat-rejected').textContent = wanted.filter(w => w.status === 'rejected').length;
+        }
+
+        function renderWantedTable() {
+            let wanted = getWantedList();
+            
+            if (wantedTab === 'pending') wanted = wanted.filter(w => w.status === 'pending');
+            else if (wantedTab === 'approved') wanted = wanted.filter(w => w.status === 'approved');
+            
+            if (wantedKeyword) {
+                wanted = wanted.filter(w => w.title.toLowerCase().includes(wantedKeyword.toLowerCase()));
+            }
+            
+            wanted.sort((a, b) => b.timestamp - a.timestamp);
+            
+            const tbody = document.getElementById('wanted-table-body');
+            
+            if (wanted.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 3rem; color: var(--gray-400);">暂无数据</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = wanted.map(item => `
+                <tr>
+                    <td><a href="rent-wanted-detail.html?id=${item.id}" target="_blank" style="color: var(--primary); font-weight: 500;">${item.title}</a></td>
+                    <td><span style="background: #eff6ff; padding: 0.25rem 0.625rem; border-radius: var(--radius); font-size: 0.8125rem;">${item.region}</span></td>
+                    <td>${item.area}㎡</td>
+                    <td style="color: var(--accent); font-weight: 700;">¥${formatPrice(item.budget)}/月</td>
+                    <td>${item.type}</td>
+                    <td><span style="padding: 0.25rem 0.625rem; border-radius: var(--radius); font-size: 0.8125rem; ${
+                        item.status === 'approved' ? 'background: #d1fae5; color: #065f46;' : 
+                        item.status === 'pending' ? 'background: #fef3c7; color: #92400e;' : 
+                        'background: #fee2e2; color: #991b1b;'
+                    }">${item.status === 'approved' ? '已发布' : item.status === 'pending' ? '待审核' : '已拒绝'}</span></td>
+                    <td style="color: var(--gray-500); font-size: 0.875rem;">${formatDate(item.timestamp)}</td>
+                    <td>
+                        <div class="table-actions">
+                            ${item.status === 'pending' ? `<button class="btn-approve" onclick="approveWanted('${item.id}')"><i class="fas fa-check"></i> 通过</button>` : ''}
+                            ${item.status === 'pending' ? `<button class="btn-delete" onclick="rejectWanted('${item.id}')"><i class="fas fa-times"></i> 拒绝</button>` : ''}
+                            <button class="btn-delete" onclick="deleteWantedConfirm('${item.id}')"><i class="fas fa-trash"></i> 删除</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function approveWanted(id) {
+            const wanted = getWantedList();
+            const index = wanted.findIndex(w => w.id == id);
+            if (index !== -1) {
+                wanted[index].status = 'approved';
+                localStorage.setItem('yqh_rent_wanted', JSON.stringify(wanted));
+                showToast('审核通过');
+                updateWantedStats();
+                renderWantedTable();
+            }
+        }
+
+        function rejectWanted(id) {
+            if (confirm('确定拒绝此求租信息吗？')) {
+                const wanted = getWantedList();
+                const index = wanted.findIndex(w => w.id == id);
+                if (index !== -1) {
+                    wanted[index].status = 'rejected';
+                    localStorage.setItem('yqh_rent_wanted', JSON.stringify(wanted));
+                    showToast('已拒绝');
+                    updateWantedStats();
+                    renderWantedTable();
+                }
+            }
+        }
+
+        function deleteWantedConfirm(id) {
+            if (confirm('确定删除此求租信息吗？此操作不可恢复。')) {
+                let wanted = getWantedList();
+                wanted = wanted.filter(w => w.id != id);
+                localStorage.setItem('yqh_rent_wanted', JSON.stringify(wanted));
+                showToast('删除成功');
+                updateWantedStats();
+                renderWantedTable();
+            }
+        }
+
+        // 用户管理
+        function updateUserStats() {
+            const users = getUsers();
+            document.getElementById('user-stat-total').textContent = users.length;
+            document.getElementById('user-stat-active').textContent = users.filter(u => u.role !== 'disabled').length;
+            document.getElementById('user-stat-admin').textContent = users.filter(u => u.role === 'admin').length;
+        }
+
+        function renderUsersTable() {
+            let users = getUsers();
+            const keyword = document.getElementById('user-search-keyword').value;
+            
+            if (keyword) {
+                users = users.filter(u => 
+                    u.username.toLowerCase().includes(keyword.toLowerCase()) || 
+                    (u.phone && u.phone.includes(keyword))
+                );
+            }
+            
+            users.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            
+            const tbody = document.getElementById('users-table-body');
+            
+            if (users.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 3rem; color: var(--gray-400);">暂无用户</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = users.map(u => `
+                <tr>
+                    <td style="font-weight: 500;">${u.username}</td>
+                    <td>${u.phone || '-'}</td>
+                    <td><span style="padding: 0.25rem 0.625rem; border-radius: var(--radius); font-size: 0.8125rem; background: ${u.role === 'admin' ? '#dbeafe' : '#f1f5f9'}; color: ${u.role === 'admin' ? '#1e40af' : '#475569'};">${u.role === 'admin' ? '管理员' : '普通用户'}</span></td>
+                    <td style="color: var(--gray-500); font-size: 0.875rem;">${formatDate(u.created_at)}</td>
+                    <td>
+                        <div class="table-actions">
+                            ${u.role !== 'admin' ? `<button class="btn-approve" onclick="toggleUserRole('${u.id}')"><i class="fas fa-user-cog"></i> 设为管理员</button>` : ''}
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function toggleUserRole(id) {
+            if (confirm('确定将此用户设为管理员吗？')) {
+                const users = getUsers();
+                const index = users.findIndex(u => u.id === id);
+                if (index !== -1) {
+                    users[index].role = 'admin';
+                    localStorage.setItem('yqh_users', JSON.stringify(users));
+                    showToast('已将用户设为管理员');
+                    updateUserStats();
+                    renderUsersTable();
+                }
+            }
+        }
+
+        // 导出Excel
+        function exportToExcel() {
+            const listings = getListings();
+            const wanted = getWantedList();
+            const users = getUsers();
+            
+            // 创建CSV内容
+            let csv = '\uFEFF'; // BOM for UTF-8
+            
+            // 房源信息
+            csv += '\n【房源信息】\n';
+            csv += '标题,地区,面积(㎡),租金(元/月),类型,地址,联系人,电话,状态,发布时间\n';
+            listings.forEach(item => {
+                csv += `"${item.title}",${item.region},${item.area},${item.price},${item.type},"${item.location || ''}","${item.contact_name || ''}",${item.contact},${item.status},${formatDate(item.timestamp)}\n`;
+            });
+            
+            // 求租信息
+            csv += '\n【求租信息】\n';
+            csv += '标题,地区,面积(㎡),预算(元/月),类型,描述,联系人,电话,状态,发布时间\n';
+            wanted.forEach(item => {
+                csv += `"${item.title}",${item.region},${item.area},${item.budget || ''},${item.type},"${(item.description || '').replace(/"/g, '""')}","${item.name}",${item.contact},${item.status},${formatDate(item.timestamp)}\n`;
+            });
+            
+            // 用户信息
+            csv += '\n【用户信息】\n';
+            csv += '用户名,手机号,角色,注册时间\n';
+            users.forEach(u => {
+                csv += `${u.username},${u.phone || ''},${u.role === 'admin' ? '管理员' : '用户'},${formatDate(u.created_at)}\n`;
+            });
+            
+            // 下载文件
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `园企汇数据_${new Date().toISOString().slice(0,10)}.csv`;
+            link.click();
+            
+            showToast('数据导出成功');
+        }
+
+        // 退出登录
+        document.getElementById('admin-logout').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (confirm('确定要退出登录吗？')) {
+                localStorage.removeItem('yqh_user');
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Tab切换
+        document.querySelectorAll('.admin-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const section = this.closest('.admin-section-content');
+                if (section) {
+                    section.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // 主Tab切换
+        document.querySelectorAll('.admin-tabs .admin-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.admin-tabs .admin-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.admin-section-content').forEach(s => s.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById('section-' + this.dataset.tab).classList.add('active');
+            });
+        });
+
+        // 子Tab切换（房源）
+        document.querySelectorAll('#section-listings .table-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('#section-listings .table-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                listingsTab = this.dataset.tab;
+                renderListingsTable();
+            });
+        });
+
+        document.getElementById('search-keyword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                listingsKeyword = this.value;
+                renderListingsTable();
+            }
+        });
+
+        // 子Tab切换（求租）
+        document.querySelectorAll('#section-wanted .table-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('#section-wanted .table-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                wantedTab = this.dataset.tab;
+                renderWantedTable();
+            });
+        });
+
+        document.getElementById('wanted-search-keyword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                wantedKeyword = this.value;
+                renderWantedTable();
+            }
+        });
+
+        // 用户搜索
+        document.getElementById('user-search-keyword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                renderUsersTable();
+            }
+        });
+
+        // 初始化
+        if (checkAdminAuth()) {
+            updateListingsStats();
+            renderListingsTable();
+            updateWantedStats();
+            renderWantedTable();
+            updateUserStats();
+            renderUsersTable();
+        }
+    </script>
+</body>
+</html>
